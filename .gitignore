@@ -1,5 +1,68 @@
-function/__pycache__/
-front/__pycache__/
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+.venv/
+env/
+.env
+.env.*
+!.env.example
+ENV/
+env.bak/
+venv.bak/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.hypothesis/
+.tox/
+.nox/
+
+# IDE & Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
 .DS_Store
-*.pyc
-*.pt*
+Thumbs.db
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Model weights and large binaries (FastAI / YOLO / PyTorch)
+*.pt
+*.pth
+*.onnx
+*.pkl
+*.bin
+
+# Logs
+*.log
+logs/
+
+# Streamlit secrets (keep template/example safe)
+.streamlit/secrets.toml
