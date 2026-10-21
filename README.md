@@ -1,128 +1,240 @@
-#  🛡️VenomGuard
+# 🛡️ VenomGuard
 
-## Next-Gen Snakebite Management System with AI Expertise, 💊 Medication Recommendations, 🏥 Hospital Locator, and Interactive LLM Companion 🤖
-<h3 align="center">
-<ins> <b>Project specially developed for UGIP Hackathon by SoftBank & UTokyo</b> </ins>
-</h3>
-Snakebites are a significant global health issue, particularly in rural and impoverished regions of tropical and subtropical countries. The World Health Organization (WHO) recognizes snakebite envenoming as a neglected tropical disease. Estimates suggest that there are approximately **5.4 million snakebite cases annually, leading to between 81,000 and 138,000 deaths.** Additionally, about <ins> 400,000 survivors suffer from serious sequelae, including amputations, renal failure, and psychological trauma. </ins>
+<div align="center">
 
-### Regions Most Affected 🐍 
-The burden of **snakebites is disproportionately borne by communities in Africa, Asia, and Latin America.** In these regions, access to medical care is limited, and antivenom, the primary treatment, may be scarce, unaffordable, or ineffective against local snake venoms. India, with its diverse snake population, reports the highest number of snakebite deaths. Sub-Saharan Africa also faces a significant snakebite burden, with many cases going unreported.
+[![VenomGuard CI](https://github.com/niran/venomguard/actions/workflows/ci.yml/badge.svg)](https://github.com/niran/venomguard/actions)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B.svg)](https://streamlit.io)
+[![WHO NTD Aligned](https://img.shields.io/badge/WHO%20Guideline-Compliant-008DC9.svg)](https://www.who.int/teams/control-of-neglected-tropical-diseases/snakebite-envenoming)
 
-### Economic and Social Consequences 💸
-The impact of snakebites extends beyond health. Survivors often face significant economic hardships due to loss of livelihoods and the cost of treatment. In many cultures, victims may also experience social stigmatization. The economic burden on families and healthcare systems is compounded by the lack of affordable and effective treatment options.
+### Next-Gen AI-Powered Snakebite Emergency Management System
+**Computer Vision Species Identification • WHO Clinical Triage • Antivenom Hospital Routing • Conversational AI Companion**
 
-## Objective and Solution:
-In **addressing the critical challenges posed by snakebites globally**, our project **"VenomGuard"** proposes an innovative, technology-driven solution designed to **mitigate the impact of snakebites through enhanced detection, identification, and response mechanisms.** 🌟
+*Developed for the UGIP Hackathon by SoftBank & The University of Tokyo*
 
-### 🚀 Technologies Employed
-* **Machine Learning & AI:** Utilizes the FastAI learning model on top of the ResNet architecture to create a customized offline model for precise snake detection. Over 100,000 images were used to train this extensive model. [Download model here](https://drive.google.com/file/d/1eRcUwWEXfuFvDOZ-vlBtIYctBbL_xI6W/view?usp=sharing)
-* **Online Ready:** Since the online platforms currently support smaller models for free hosting, we use custom developed Ultralytics YOLO model for cloud enabled online real-time, accurate detection of snake presence and species classification, harnessing custom-trained models based on extensive datasets scraped from across the web.
-* **Geolocation & Mapping API:** Integrates Google Maps API for seamless navigation to the nearest healthcare facilities capable of snakebite treatment, directly from the user's location.
-* **Natural Language Processing:** Employs OpenAI's latest language model for instant, reliable first aid guidance, enhancing user interaction and knowledge dissemination.
-* **Streamlit Web Application:** A user-friendly interface that democratizes access to life-saving snakebite information and resources, designed for widespread use across varied geographical and socio-economic landscapes.
+</div>
 
-### 💡 Key Features
-* **AI-Driven Identification:** Advanced algorithms instantly recognize and classify snakes, discerning venomous from non-venomous species with unparalleled accuracy.
-* **Critical Medical Resources:** An interactive map guides affected individuals to the closest medical facilities equipped for snakebite emergencies, informed by real-time geolocation data.
-* **Immediate First Aid Assistance:** The integration of an AI-powered conversational agent provides users with immediate, actionable first aid advice, tailored to the specific snakebite incident.
-* **Comprehensive Educational Outreach:** A vast, accessible knowledge base educates communities on snakebite prevention, first aid, and the importance of timely medical intervention.
+---
 
-### 🌍 Impact and Innovation
-This project stands at the forefront of global health innovation, addressing the WHO's call to action on snakebite envenoming with a multifaceted technology-first approach. By combining AI, geo-location, and LLM technologies, we're setting new standards in public health response mechanisms, educational outreach, and community empowerment against snakebites.
+> [!NOTE]
+> **Cloud Deployment Status**: The public cloud website demo is temporarily undergoing infrastructure and model upgrades and **will be back online soon!**  
+> In the meantime, you can run VenomGuard locally in full or offline Demo Mode with a single command.
 
-* **Elevates Global Health Standards:** Our solutions directly contribute to reducing the annual incidence of snakebite fatalities and long-term disabilities, particularly in under-resourced regions.
-* **Democratizes Medical Knowledge:** By providing immediate, accessible guidance on snakebite treatment and first aid, we bridge critical gaps in public health education.
-* **Supports Sustainable Healthcare Practices:** Our project aids in the optimization of antivenom distribution and use, supporting more sustainable healthcare practices worldwide.
+---
 
-### 🛠️ Behind the Scenes: Technical Brilliance
-* **Custom AI Models** - Developed three bespoke AI models: one for detecting snake presence and two for detailed species classification, trained on a vast corpus of data, showcasing a significant leap in machine learning applications for public health.
-* **Comprehensive Data Aggregation** - Conducted exhaustive internet-wide scraping efforts to compile a comprehensive database on global snake species, supplemented by a sophisticated fuzzy logic algorithm for nuanced species differentiation.
-* **Streamlit & Google Maps Integration** - Crafted an intuitive Streamlit web application, integrating Google Maps API for automated user location detection and nearby hospital listings, culminating in a seamless end-to-end user experience.
+## 🌍 The Global Humanitarian Challenge & Why Open Source Matters
 
-# Setup
+Snakebite envenoming is officially recognized by the **World Health Organization (WHO)** as one of the world's most severe **Neglected Tropical Diseases (NTDs)**.
 
-## Prerequisites
-
-Before installing and running this application, ensure you have the following installed on your system:
-- Python 3.9
-- Conda (recommended for managing environments)
-- Pytorch, CUDA (check reuirements.txt)
-
-## Installation & Environment Setup
-
-1. **Create and Activate a Conda Environment**
-
-   To isolate and manage the project's dependencies, create a new Conda environment:
-
-   ```bash
-   conda create -n snakeenv python=3.9
-   conda activate snakeenv
-   ```
-
-2. **Install Required Libraries**
-
-   Install the necessary Python libraries within your active environment:
-
-   ```bash
-   pip install -y ultralytics opencv-python-headless pillow matplotlib pandas fuzzywuzzy python-Levenshtein requests concurrent futures
-   ```
-
-   Note: The `ultralytics[all]` package is a comprehensive installation that includes YOLOv5 and other utilities for deep learning-based object detection.
-
-3. **Additional Dependencies**
-
-   Depending on your system, you might need additional libraries or tools. Ensure all dependencies are resolved before proceeding.
-
-## Application Setup
-
-1. **Clone the Repository**
-
-   Ensure you have the application code on your local machine. If provided, clone the repository using Git or download the source code directly.
-
-2. **Prepare the Dataset**
-
-   Place your dataset images in the specified directory structure (e.g., `./AI_Code/Dataset/examples/`) to ensure the application can process them.
-
-3. **API Keys and Endpoints**
-
-   Update the `DetectSnakeExistence` class with the correct API keys and endpoints for the inference services you are using. These are critical for connecting to external AI models for snake detection and type identification.
-
-## Dataset
-
-* For training of the snake models, use the dataset sourced from [Microsoft and AI Crowd](https://www.aicrowd.com/challenges/snakeclef2021-snake-species-identification-challenge).
-* We custom scrape the "snake deadliness" information from [SnakeDB](http://snakedb.org/)
-*  You can find complete information of our novel crowdsourced data [here](AI_Code/custom_snakes_data.csv)
-
-## Running the Application
-
-To execute the snake detection application, navigate to the project directory and run the main script:
-
-```bash
-python main.py
+```
+       ANNUAL GLOBAL TOLL OF SNAKEBITE ENVENOMING
+┌────────────────────────────────────────────────────────┐
+│  5.4 MILLION Snakebite Incidents Annually              │
+│  81,000 - 138,000 Deaths Each Year                     │
+│  400,000+ Permanent Disabilities & Amputations         │
+└────────────────────────────────────────────────────────┘
 ```
 
-Replace `main.py` with the actual name of your Python script if different.
+### The "Golden Hour" Emergency Gap
+- **Disproportionate Impact**: Over 95% of snakebite casualties occur in impoverished agricultural and rural communities across South Asia (notably India), Sub-Saharan Africa, Southeast Asia, and Latin America.
+- **The Lethal Cost of Folk Myths**: In the panic following a bite, victims and bystanders frequently apply arterial tourniquets, make razor incisions, attempt mouth suction, or apply freezing ice. The WHO explicitly warns that these unscientific practices cause severe tissue necrosis, gangrene, systemic infections, and amputation.
+- **Antivenom Scarcity & Mismatch**: Antivenom is scarce, species-specific, and expensive. Patients are frequently brought to rural clinics that lack appropriate antivenoms or mechanical ventilation, losing critical hours during transport.
 
-To run the model detections in isolation, run the `DetectSnakeExistence` class from [here](AI_Code/detect_snake_existence.py)
-```bash
-python './AI_Code/detect_snake_existence.py' 
+### The Role of Open Source
+Most medical AI systems are walled off behind proprietary corporate platforms. **VenomGuard** is an open-source, community-governed public health initiative designed to:
+1. Provide instant, free, reliable snake species identification and toxicity classification.
+2. Deliver evidence-based **WHO clinical first aid protocols completely offline** — functioning even in remote wilderness or areas with zero cellular connectivity.
+3. Guide rescuers directly to equipped emergency medical facilities stocking antivenom.
+4. Support community health workers, wilderness travelers, and rural medical clinics worldwide.
+
+---
+
+## 🏗️ System Architecture
+
+VenomGuard brings together a resilient multi-tier pipeline designed for high availability and offline continuity:
+
+```mermaid
+flowchart TD
+    A["User Input: Photo, Camera, or Manual Entry"] --> B{"Input Mode"}
+    
+    B -->|Photo Upload / Camera| C["Computer Vision Pipeline"]
+    B -->|Manual / Text Entry| D["Taxonomic Search Engine"]
+    
+    subgraph CV_Engine ["AI Detection & Classification"]
+        C --> C1["Presence Detector (YOLOv8 / Roboflow)"]
+        C1 -->|Snake Detected| C2["Species Ensemble (Dual Roboflow Classifiers)"]
+        C1 -->|No Snake| C3["Guidance & Re-capture Advice"]
+        C2 --> C4["Confidence Arbiter & Calibration"]
+    end
+    
+    subgraph Knowledge_Engine ["Clinical & Taxonomic Database"]
+        C4 --> E["3,600+ Curated Taxa Knowledge Base"]
+        D --> E
+        E -->|Exact or Fuzzy Match| F["Species Toxicity & Morphology Profile"]
+        E -->|Unconfirmed Species| G["Clinical Safety Fallback (Treated as Venomous)"]
+    end
+    
+    subgraph Emergency_Response ["Triage & Navigation Layer"]
+        F --> H["WHO Emergency First Aid Protocol Engine"]
+        G --> H
+        H --> I["Geolocation & Emergency Routing"]
+        I --> I1["Google Maps Places / OpenStreetMap"]
+        I --> I2["Direct One-Click Emergency Call (112 / 911 / 108)"]
+        H --> J["Interactive AI Companion (GPT-4o + Offline Rule-Based Triage)"]
+    end
 ```
-## Example Usage
 
-After running the application, it will process the image specified in the `path_to_image` variable, detect if a snake is present, identify its type, and fetch detailed information about the snake. The results will be printed to the console.
+---
 
-## Troubleshooting
+## 💡 Key Capabilities & Modules
 
-- **Environment Issues**: Ensure the Conda environment is activated before installing dependencies or running the application.
-- **Dependency Conflicts**: If you encounter conflicts, verify the installed versions of the libraries and consult their official documentation for compatibility information.
-- **API Connectivity**: Ensure your API keys are valid and endpoints are correctly configured in the application code.
+### 1. 🔬 Computer Vision Snake Classifier
+- **Multi-Model Inference**: Integrates presence detection and fine-grained species identification.
+- **3,600+ Global Snake Database**: Maps taxonomic names to clinical toxicity indicators (e.g., neurotoxic ptosis, hemotoxic hemorrhage, cytotoxic necrosis).
+- **Fuzzy String Matching**: Tolerates misspelled common or scientific names with resilient fallback algorithms.
 
+### 2. 🚨 WHO-Compliant Emergency First Aid (100% Offline Capable)
+- **Immediate Essential Actions (DO)**: Limb splinting and immobilization, removing restrictive jewelry, keeping the victim calm and still, tracking swelling boundaries.
+- **Lethal Myths Dispelled (DO NOT)**: Explicitly forbids arterial tourniquets, cutting/incising, mouth suction, ice, and folk herbs.
+- **Syndromic Triage**: Distinguishes neurotoxic (respiratory failure) from hemotoxic (coagulopathy) presentations.
 
-## Authors
-<!-- Add your information here! -->
-- [@Miyuki]()
-- [@Niran](https://niran.dev/)
-- [@Yuki]()
+### 3. 🏥 Resilient Hospital Locator & Emergency Dispatch
+- **Multi-Provider Geolocation**: Seamless IP geolocation with reverse geocoding via OpenStreetMap Nominatim and Google Maps API.
+- **Antivenom Routing**: Direct one-click turn-by-turn navigation to nearby emergency hospitals and poison control units.
+- **1-Click Emergency Calling**: Direct phone links (`tel:112`) configured for mobile browser dialing.
 
+### 4. 🤖 Conversational AI Medical Companion
+- **Hybrid AI Architecture**: Powered by modern OpenAI language models (`gpt-4o-mini`) when online, with an intelligent, rule-based medical responder that answers questions even without an API key or internet access.
 
+---
+
+## 🚀 Quickstart Guide
+
+### Prerequisites
+- Python 3.9 to 3.12
+- Conda or Python `venv`
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/niran/venomguard.git
+cd venomguard
+```
+
+### 2. Set Up Environment
+Using Conda:
+```bash
+conda create -n venomguard python=3.10 -y
+conda activate venomguard
+pip install -r requirements.txt
+```
+
+Using standard Python `venv`:
+```bash
+python -m venv .venv
+# On Windows:
+.venv\Scripts\activate
+# On Linux/macOS:
+source .venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+### 3. Configure API Keys (Optional)
+VenomGuard is engineered to work out of the box in **Demo Mode** and **Offline Mode** without any paid API keys!
+
+To enable live external APIs (Roboflow, OpenAI, Google Maps), copy the environment template:
+```bash
+cp .env.example .env
+```
+Edit `.env` with your preferred credentials:
+```ini
+OPENAI_API_KEY=your_openai_key_here
+GOOGLE_MAPS_API_KEY=your_google_maps_key_here
+ROBOFLOW_API_KEY=your_roboflow_key_here
+VENOMGUARD_DEMO_MODE=false
+```
+
+### 4. Run the Streamlit Application
+```bash
+streamlit run main.py
+```
+Open your browser at `http://localhost:8501`.
+
+---
+
+## 🧪 Running Unit Tests
+
+VenomGuard includes an automated unit test suite verifying species matching, clinical triage protocols, offline responder intelligence, and hospital routing:
+
+```bash
+python -m unittest discover tests -v
+```
+
+Or using `pytest`:
+```bash
+pytest tests/ -v
+```
+
+---
+
+## 📂 Repository Structure
+
+```
+venomguard/
+├── .github/workflows/ci.yml       # GitHub Actions CI matrix (Ubuntu & Windows)
+├── .editorconfig                  # Formatting and style standards
+├── .env.example                   # Environment configuration template
+├── .gitignore                     # Modern Git ignore rules
+├── requirements.txt               # Production dependencies
+├── requirements-dev.txt           # Testing & linting tools
+├── packages.txt                   # Linux system packages for cloud hosting
+├── LICENSE                        # MIT License
+├── README.md                      # Project documentation & impact overview
+├── main.py                        # Streamlit entry point and application router
+│
+├── AI_Code/                       # Machine Learning & Computer Vision
+│   ├── detect_snake_existence.py  # Snake presence & species detection engine
+│   ├── custom_snakes_data.csv     # Curated global dataset of 3,600+ snake taxa
+│   └── Dataset/examples/          # Verified sample imagery for demo & testing
+│
+├── front/                         # Streamlit UI Views & Component Pages
+│   ├── home.py                    # Landing page & deadliest snakes showcase
+│   ├── upload_image_1.py          # Image capture, demo mode, and location form
+│   ├── show_result_2.py           # Identification result & toxicity badge
+│   ├── first_aid_3.py             # Emergency WHO first-aid cards & call buttons
+│   ├── info_c1.py                 # Manual snake description entry
+│   ├── chat_c2.py                 # Conversational emergency companion view
+│   ├── about.py                   # Global health context & architecture
+│   ├── partner.py                 # Institutional & government partnership tiers
+│   └── error.py                   # Diagnostic guidance & recovery flows
+│
+├── function/                      # Core Clinical & Geolocation Engines
+│   ├── who_guidelines.py          # WHO clinical first-aid protocol & triage engine
+│   ├── location.py                # Geocoding & hospital locator routing
+│   ├── first_aid.py               # Emergency first-aid orchestrator
+│   └── llm_chat.py                # Conversational AI companion with offline fallback
+│
+└── tests/                         # Comprehensive Unit Test Suite
+    ├── test_detection.py          # Species taxonomy & fuzzy matching tests
+    ├── test_who_guidelines.py     # WHO first aid & syndromic triage tests
+    ├── test_location.py           # Geolocation & hospital routing tests
+    └── test_chat.py               # Emergency conversational responder tests
+```
+
+---
+
+## 👥 Authors & Recognition
+
+VenomGuard was originally designed and built for the **UGIP Hackathon by SoftBank & The University of Tokyo**:
+
+- **Niran N** — Lead Architecture & Engineering ([niran.dev](https://niran.dev/) / [@Niran](https://github.com/niran))
+- **Miyuki** — ML Research & Public Health Workflow
+- **Yuki** — Clinical Research & Design
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+We actively encourage humanitarian organizations, herpetologists, public health researchers, and developers to fork, extend, and deploy VenomGuard to protect at-risk communities worldwide.
