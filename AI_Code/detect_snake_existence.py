@@ -1,7 +1,7 @@
 """
 VenomGuard - AI Snake Existence & Species Identification Module
 Detects presence of snakes in images and identifies species with toxicity classification.
-Built with robust fallbacks: uses pandas & fuzzywuzzy if available, with pure-Python
+Built with standard-library fallbacks: uses pandas & fuzzywuzzy if available, with pure-Python
 csv & difflib fallbacks to ensure operation in any environment.
 """
 
@@ -139,17 +139,17 @@ class DetectSnakeExistence:
 
         logger.warning("Could not find custom_snakes_data.csv. Generating emergency dataset.")
         fallback_data = [
-            {"snake_name": "Inland Taipan", "scientific_name": "Oxyuranus microlepidotus", "toxicity": "venomous 💀💀💀💀 highly lethal neurotoxic", "size": "Length: 180 to 250 cm"},
-            {"snake_name": "Coastal Taipan", "scientific_name": "Oxyuranus scutellatus", "toxicity": "venomous 💀💀💀💀 highly dangerous bite", "size": "Length: up to 200 cm"},
-            {"snake_name": "King Cobra", "scientific_name": "Ophiophagus hannah", "toxicity": "venomous 💀💀💀💀 lethal neurotoxic bite", "size": "Length: 300 to 550 cm"},
-            {"snake_name": "Black Mamba", "scientific_name": "Dendroaspis polylepis", "toxicity": "venomous 💀💀💀💀 rapid lethal bite", "size": "Length: 200 to 300 cm"},
-            {"snake_name": "Saw-scaled Viper", "scientific_name": "Echis carinatus", "toxicity": "venomous 💀💀💀💀 dangerous hemotoxic bite", "size": "Length: 30 to 80 cm"},
-            {"snake_name": "Russell's Viper", "scientific_name": "Daboia russelii", "toxicity": "venomous 💀💀💀 dangerous hemotoxic/cytotoxic", "size": "Length: 100 to 166 cm"},
-            {"snake_name": "Common Krait", "scientific_name": "Bungarus caeruleus", "toxicity": "venomous 💀💀💀💀 severe neurotoxic bite", "size": "Length: 90 to 150 cm"},
-            {"snake_name": "Indian Cobra", "scientific_name": "Naja naja", "toxicity": "venomous 💀💀💀 dangerous neurotoxic/cytotoxic", "size": "Length: 100 to 150 cm"},
-            {"snake_name": "Eastern Indigo Snake", "scientific_name": "Drymarchon couperi", "toxicity": "non-venomous --- harmless constrictor", "size": "Length: 120 to 215 cm"},
-            {"snake_name": "Corn Snake", "scientific_name": "Pantherophis guttatus", "toxicity": "non-venomous --- harmless", "size": "Length: 60 to 180 cm"},
-            {"snake_name": "Ball Python", "scientific_name": "Python regius", "toxicity": "non-venomous --- harmless constrictor", "size": "Length: 90 to 150 cm"}
+            {"snake_name": "Inland Taipan", "scientific_name": "Oxyuranus microlepidotus", "toxicity": "venomous - highly lethal neurotoxic", "size": "Length: 180 to 250 cm"},
+            {"snake_name": "Coastal Taipan", "scientific_name": "Oxyuranus scutellatus", "toxicity": "venomous - highly dangerous bite", "size": "Length: up to 200 cm"},
+            {"snake_name": "King Cobra", "scientific_name": "Ophiophagus hannah", "toxicity": "venomous - lethal neurotoxic bite", "size": "Length: 300 to 550 cm"},
+            {"snake_name": "Black Mamba", "scientific_name": "Dendroaspis polylepis", "toxicity": "venomous - rapid lethal bite", "size": "Length: 200 to 300 cm"},
+            {"snake_name": "Saw-scaled Viper", "scientific_name": "Echis carinatus", "toxicity": "venomous - dangerous hemotoxic bite", "size": "Length: 30 to 80 cm"},
+            {"snake_name": "Russell's Viper", "scientific_name": "Daboia russelii", "toxicity": "venomous - dangerous hemotoxic/cytotoxic", "size": "Length: 100 to 166 cm"},
+            {"snake_name": "Common Krait", "scientific_name": "Bungarus caeruleus", "toxicity": "venomous - severe neurotoxic bite", "size": "Length: 90 to 150 cm"},
+            {"snake_name": "Indian Cobra", "scientific_name": "Naja naja", "toxicity": "venomous - dangerous neurotoxic/cytotoxic", "size": "Length: 100 to 150 cm"},
+            {"snake_name": "Eastern Indigo Snake", "scientific_name": "Drymarchon couperi", "toxicity": "non-venomous - harmless constrictor", "size": "Length: 120 to 215 cm"},
+            {"snake_name": "Corn Snake", "scientific_name": "Pantherophis guttatus", "toxicity": "non-venomous - harmless", "size": "Length: 60 to 180 cm"},
+            {"snake_name": "Ball Python", "scientific_name": "Python regius", "toxicity": "non-venomous - harmless constrictor", "size": "Length: 90 to 150 cm"}
         ]
         self._records = fallback_data
         if _HAS_PANDAS:
@@ -354,7 +354,7 @@ class DetectSnakeExistence:
         return SnakeInfo(
             snake_name=snake_type,
             scientific_name="Species unconfirmed",
-            toxicity="venomous ⚠️ Treat as potentially venomous until clinically evaluated",
+            toxicity="venomous - Treat as potentially venomous until clinically evaluated",
             size="Length: Variable",
             source="safety_fallback"
         )

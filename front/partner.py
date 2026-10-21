@@ -1,6 +1,6 @@
 """
 VenomGuard - Partner With Us
-Clear, grounded partnership avenues for clinics, health departments, and sponsors.
+Collaboration avenues for clinics, health departments, and research institutions.
 """
 
 import streamlit as st
@@ -8,56 +8,56 @@ import streamlit as st
 
 def partner_page():
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 24px; border-radius: 12px; margin-bottom: 24px; text-align: center;">
-        <h2 style='color: white; margin: 0; font-weight: 800;'>🤝 Partner with VenomGuard</h2>
-        <p style='color: #f1f8f5; margin-top: 6px; font-size: 16px;'>
-            Let's work together to get better snakebite triage tools to the communities that need them most.
+    <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 22px; border-radius: 8px; margin-bottom: 24px; text-align: center;">
+        <h2 style='color: white; margin: 0; font-weight: 800;'>Partner with VenomGuard</h2>
+        <p style='color: #f1f8f5; margin-top: 6px; font-size: 15px;'>
+            Collaborative avenues to improve snakebite triage and antivenom routing in vulnerable regions.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("""
-    Preventing snakebite fatalities isn't just a software problem—it requires cold-chain logistics, 
-    antivenom supplies, and well-trained health workers. We collaborate with partners across three main areas:
+    Mitigating snakebite mortality requires coordination across cold-chain logistics, 
+    antivenom supplies, and clinical education. We collaborate across three main sectors:
     """)
 
     tab_gov, tab_corp, tab_ngo = st.tabs([
-        "🏛️ Health Departments & Rural Clinics",
-        "🏢 Healthcare Industry & CSR Sponsors",
-        "🌍 Researchers & Field Non-Profits"
+        "Public Health and Rural Clinics",
+        "Healthcare Industry and Corporate Support",
+        "Field NGOs and Clinical Researchers"
     ])
 
     with tab_gov:
-        st.markdown("### 🏛️ For Regional Health Authorities & Public Clinics")
+        st.markdown("### Public Health Authorities and Regional Clinics")
         st.markdown("""
-        If you run or support rural healthcare facilities in snakebite-endemic regions, we want to help you deploy VenomGuard locally:
+        For health departments and district medical centers in snakebite-endemic regions:
         
-        - **Emergency Dispatch Integration**: Link VenomGuard directly into your local ambulance lines (e.g., 108 in India or 112 in GSM networks).
-        - **Antivenom Stock Audits**: Help us keep an up-to-date registry of which hospitals currently stock monovalent and polyvalent antivenom.
-        - **Field Worker Toolkits**: Put lightweight offline snake identification in the hands of community health extensionists and rural clinic nurses.
-        - **Incident Mapping**: Aggregate anonymized, community-level encounter data to predict seasonal snakebite spikes.
+        - Emergency dispatch integration: Connecting VenomGuard triage data with ambulance dispatch lines.
+        - Antivenom inventory tracking: Maintaining current registries of facilities stocking specific antivenoms.
+        - Community health extension: Equipping rural primary healthcare workers with offline identification tools.
+        - Surveillance mapping: Analyzing anonymized incidence data to forecast seasonal surge periods.
         """)
 
     with tab_corp:
-        st.markdown("### 🏢 For CSR Programs & Tech Sponsors")
+        st.markdown("### Corporate Social Responsibility and Industry Partnerships")
         st.markdown("""
-        We are proud to partner with tech companies, medical device makers, and philanthropic foundations:
+        For organizations providing technical infrastructure or philanthropic support:
         
-        - **Subsidizing Antivenom Access**: Direct financial grants to cover antivenom vials for low-income agricultural families who cannot afford treatment.
-        - **Model Training & Cloud Infrastructure**: Cloud compute credits that allow us to expand our computer vision models to hundreds of rare species.
-        - **Cold-Chain Logistics Support**: Helping rural clinics maintain the refrigeration required to keep antivenom potent.
+        - Antivenom access funding: Grants directed to subsidize antivenom vials for low-income patients.
+        - Computational resources: Cloud compute support for retraining models across underrepresented species.
+        - Distribution and cold-chain support: Initiatives maintaining required refrigeration at remote health posts.
         """)
 
     with tab_ngo:
-        st.markdown("### 🌍 For Herpetologists, Doctors & Field NGOs")
+        st.markdown("### Herpetologists and Humanitarian Researchers")
         st.markdown("""
-        If you work on the front lines of global health, wilderness safety, or herpetology, we'd love your expertise:
+        For field clinicians, toxicologists, and herpetologists:
         
-        - **Data Donations**: Share verified field photos to improve our detection accuracy for underrepresented species.
-        - **Clinical Review**: Help verify first-aid guidelines for specialized regional venom profiles (e.g. sea snakes, rear-fanged colubrids).
-        - **Language Localization**: Help translate first-aid advice into local dialects so anyone can read it during an emergency.
+        - Image data contributions: Sharing verified field photography to expand classification coverage.
+        - Protocol review: Refining first-aid advice for atypical or regional venom profiles.
+        - Localization: Translating emergency guidance into regional languages and dialects.
         """)
 
     st.write("---")
-    st.markdown("### 📬 Get in Touch")
-    st.markdown("Interested in working together or running a pilot? Drop a message to **partners@venomguard.org** or connect via [niran.dev](https://niran.dev/).")
+    st.markdown("### Contact")
+    st.markdown("To discuss pilot deployments or research collaboration, contact **partners@venomguard.org** or connect via [niran.dev](https://niran.dev/).")

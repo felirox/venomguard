@@ -15,19 +15,19 @@ class TestDetectSnakeExistence(unittest.TestCase):
 
     def test_snake_info_backwards_compatibility(self):
         """Ensures SnakeInfo supports list index unpacking and indexing."""
-        info = SnakeInfo("King Cobra", "Ophiophagus hannah", "venomous 💀💀💀💀", "Length: 300 to 550 cm")
+        info = SnakeInfo("King Cobra", "Ophiophagus hannah", "venomous - very dangerous bite", "Length: 300 to 550 cm")
         
         # Test tuple/list unpacking
         name, sci, tox, size = info
         self.assertEqual(name, "King Cobra")
         self.assertEqual(sci, "Ophiophagus hannah")
-        self.assertEqual(tox, "venomous 💀💀💀💀")
+        self.assertEqual(tox, "venomous - very dangerous bite")
         self.assertEqual(size, "Length: 300 to 550 cm")
 
         # Test index access
         self.assertEqual(info[0], "King Cobra")
         self.assertEqual(info[1], "Ophiophagus hannah")
-        self.assertEqual(info[2], "venomous 💀💀💀💀")
+        self.assertEqual(info[2], "venomous - very dangerous bite")
         self.assertEqual(info[3], "Length: 300 to 550 cm")
 
         # Test typed properties

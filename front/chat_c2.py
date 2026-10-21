@@ -1,6 +1,6 @@
 """
-VenomGuard - Active Chat Interface
-Direct, calm, conversational emergency companion with quick-dial call support.
+VenomGuard - Active Consultation Interface
+Conversational emergency companion and telephone dispatch access.
 """
 
 from typing import Optional, Tuple
@@ -11,15 +11,15 @@ from function.llm_chat import first_aid_chat
 
 
 def chatting_page(snake_type: str, location: Optional[Tuple[float, float]] = None):
-    st.markdown("## 🤖 Emergency First-Aid Assistant")
+    st.markdown("## First-Aid Assistant")
 
     col_msg, col_call = st.columns([2.5, 1])
     with col_msg:
-        st.markdown(f"**Chatting about incident involving**: `{snake_type}`")
-        st.caption("Ask anything: symptoms to watch for, how to wrap the limb, or what to tell the doctor.")
+        st.markdown(f"**Discussing encounter with**: `{snake_type}`")
+        st.caption("Ask questions regarding first-aid steps, symptoms to track, or preparation for hospital arrival.")
     with col_call:
         st.markdown(
-            '<a href="tel:112" style="background-color: #c0392b; color: white; padding: 8px 14px; text-decoration: none; font-weight: bold; border-radius: 6px; display: inline-block;">📞 Call 112</a>',
+            '<a href="tel:112" style="background-color: #c0392b; color: white; padding: 8px 14px; text-decoration: none; font-weight: bold; border-radius: 4px; display: inline-block;">Call 112</a>',
             unsafe_allow_html=True
         )
 

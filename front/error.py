@@ -1,43 +1,43 @@
 """
-VenomGuard - Detection Retry & Guidance View
-Reassuring, practical assistance when an image cannot be processed.
+VenomGuard - Detection Retry and Guidance
+Practical assistance when an uploaded image cannot be classified.
 """
 
 import streamlit as st
 
 
-def error_page(error_message: str = "We couldn't clearly spot a snake in that photo."):
-    st.markdown("## 🔍 No Snake Detected")
+def error_page(error_message: str = "No snake could be detected in the provided image."):
+    st.markdown("## Detection Notice")
     st.warning(st.session_state.get("error_message", error_message))
 
     st.markdown("""
-    ### Why did this happen?
-    - **Natural Camouflage**: Snakes blend into leaves, rocks, and grass extraordinarily well.
-    - **Camera Distance**: If the photo was taken from far away (which is smart for safety!), the snake might be too small for the model to detect reliably.
-    - **Lighting or Blur**: Dark or shaky photos can obscure the scales and markings our classifier looks for.
+    ### Potential factors:
+    - Background camouflage: Snakes often match surrounding foliage, rocks, and soil.
+    - Camera distance: Photos taken from a safe distance may leave the subject too small for reliable classification.
+    - Image sharpness: Motion blur or low lighting can obscure diagnostic scale patterns.
     """)
 
     st.write("---")
-    st.markdown("### What would you like to do?")
+    st.markdown("### Next Steps")
 
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button("📸 Try Another Photo", use_container_width=True):
+        if st.button("Upload Another Photo", use_container_width=True):
             st.session_state["new_state"] = "detect"
             rerun_app()
 
     with col2:
-        if st.button("💬 Describe It in VenomChat", use_container_width=True):
+        if st.button("Describe the Snake in Chat", use_container_width=True):
             st.session_state["new_state"] = "chat_c1"
             rerun_app()
 
     st.markdown(
         """
-        <div style="margin-top: 24px; padding: 14px; background-color: #2c3e50; border-radius: 8px; text-align: center;">
-            <p style="color: #ecf0f1; margin-bottom: 8px;">If someone was bitten, don't waste time taking more photos—get to a hospital right now.</p>
-            <a href="tel:112" style="background-color: #e74c3c; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: bold;">
-                🚨 Call Emergency Services (112)
+        <div style="margin-top: 24px; padding: 14px; background-color: #2c3e50; border-radius: 6px; text-align: center;">
+            <p style="color: #ecf0f1; margin-bottom: 8px;">If a bite has occurred, do not delay travel to capture more photos. Seek immediate medical evaluation.</p>
+            <a href="tel:112" style="background-color: #e74c3c; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold;">
+                Call Emergency Dispatch (112)
             </a>
         </div>
         """,

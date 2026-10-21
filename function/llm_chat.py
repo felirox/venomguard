@@ -1,7 +1,7 @@
 """
-VenomGuard - Conversational AI & Emergency Medical Triage Companion
-Real-time, calm, plain-English medical triage support for snakebite emergencies.
-Supports modern OpenAI API (gpt-4o) with an intelligent, offline WHO-compliant
+VenomGuard - Conversational AI and Emergency Medical Triage Companion
+Plain-English, verified medical triage assistance for snakebite emergencies.
+Supports modern OpenAI models with an intelligent, offline WHO-compliant
 emergency fallback engine when API keys or network are unavailable.
 """
 
@@ -33,68 +33,66 @@ def get_offline_medical_response(user_query: str, snake_type: str = "Unknown Sna
 
     if any(k in q for k in ["tourniquet", "tie", "rope", "tight", "band"]):
         return (
-            "❌ **STRICTLY DO NOT APPLY A TOURNIQUET!**\n\n"
-            "Tourniquets are one of the most dangerous snakebite myths out there. "
-            "Cutting off blood flow traps venom in the limb, rapidly kills tissue, and often leads to surgical amputation. "
-            "Worse yet, the moment doctors loosen that band at the hospital, all the trapped venom floods the heart and lungs at once, "
-            "frequently causing sudden fatal shock.\n\n"
-            "**What to do instead:** Wrap a broad, stretchy bandage firmly around the entire limb (snug like wrapping a sprained ankle—do NOT cut off blood flow), "
-            "splint it so the joints can't bend, and keep the limb resting at or slightly below heart level."
+            "DO NOT APPLY A TOURNIQUET under any circumstances.\n\n"
+            "Arterial tourniquets cut off arterial blood supply, rapidly causing tissue ischemia, gangrene, and limb amputation. "
+            "Furthermore, when a tourniquet is subsequently loosened at a medical facility, the sudden bolus of accumulated "
+            "venom and metabolic toxins released into the circulation can trigger cardiovascular collapse and shock.\n\n"
+            "What to do instead: Apply a broad crepe bandage over the entire limb (firm and snug, as for a sprained ankle, "
+            "without impeding arterial pulses), immobilize the limb with a rigid splint to prevent joint flexion, "
+            "and keep the limb resting at or slightly below heart level."
         )
 
     if any(k in q for k in ["suck", "mouth", "cut", "razor", "blade", "incision"]):
         return (
-            "❌ **NEVER CUT THE WOUND OR ATTEMPT TO SUCK OUT THE VENOM!**\n\n"
-            "Sucking venom out only works in old movies—clinical studies prove it extracts less than 1% of injected venom. "
-            "Slashing the bite wound with knives or razor blades slices tendons, nerves, and arteries, causing heavy bleeding. "
-            "Even worse, human mouths are full of bacteria, which causes severe gangrene and wound infections when introduced into deep tissue."
+            "NEVER CUT THE WOUND OR ATTEMPT TO SUCK out venom.\n\n"
+            "Clinical evaluations show that suction extracts less than 1% of injected venom. Incising the bite wound lacerates "
+            "nerves, tendons, and blood vessels, accelerating bleeding. Oral suction introduces oral bacteria deep into the wound, "
+            "causing severe secondary infections and tissue destruction. Commercial suction devices are similarly ineffective."
         )
 
     if any(k in q for k in ["ice", "cold", "freeze", "pack"]):
         return (
-            "❌ **DO NOT APPLY ICE OR COLD PACKS!**\n\n"
-            "Freezing ice severely damages skin and muscle cells that are already under stress from venom, "
-            "accelerating tissue death and causing frostbite. Keep the bite at normal room temperature."
+            "DO NOT APPLY ICE or cold packs.\n\n"
+            "Freezing temperatures accelerate local tissue necrosis, compound microvascular spasm, and produce cold-induced "
+            "frostbite in already compromised tissue. Keep the affected area at ambient temperature."
         )
 
     if any(k in q for k in ["antivenom", "antidote", "medicine", "pill", "injection"]):
         return (
-            "💊 **How Antivenom Actually Works:**\n\n"
-            "1. **Prescription Only**: Real antivenom can ONLY be given at an equipped hospital through an IV drip under a doctor's care. "
-            "Because antivenom can trigger severe allergic reactions, emergency doctors need to monitor the patient with epinephrine ready.\n"
-            "2. **Species Matching**: Hospitals choose specific antivenoms based on which snake species live in the area.\n"
-            "3. **Never buy online 'antidote pills' or folk powders**: They are counterfeit scams and completely useless against venom. Get to a hospital."
+            "Antivenom Information:\n\n"
+            "1. Prescription Only: Real antivenom is administered exclusively in equipped hospitals intravenously under direct "
+            "physician supervision. Because antivenom can provoke anaphylactic shock, clinicians must have resuscitation medications ready.\n"
+            "2. Specificity: Antivenoms are chosen based on the indigenous snake fauna of the incident area.\n"
+            "3. Do not rely on oral remedies or unverified preparations: There are no effective oral antivenoms or over-the-counter snakebite pills."
         )
 
     if any(k in q for k in ["symptom", "sign", "feel", "look like", "effect"]):
         return (
-            f"🩺 **Symptoms to Watch For with a {snake_type} Bite:**\n\n"
-            "- **Nerve & Breathing Signs**: Heavy, drooping eyelids (ptosis), double vision, trouble swallowing or slurred speech, shortness of breath.\n"
-            "- **Blood & Clotting Signs**: Persistent oozing from the bite punctures, bleeding gums, nosebleeds, or unusual bruising.\n"
-            "- **Local Tissue Signs**: Rapidly expanding swelling, blister formation, or severe burning pain.\n\n"
-            "⚠️ **Mark the swelling border with a pen every 15 minutes**—this helps the emergency doctor see how quickly venom is traveling."
+            f"Clinical Signs to Monitor for {snake_type}:\n\n"
+            "- Neurotoxic indicators: Bilateral ptosis (drooping eyelids), diplopia (double vision), dysphagia (difficulty swallowing), slurred speech, or shortness of breath.\n"
+            "- Hemotoxic indicators: Persistent bleeding from bite punctures, spontaneous gingival bleeding, epistaxis, or abnormal bruising.\n"
+            "- Local tissue effects: Rapidly expanding swelling, severe pain, or blister formation.\n\n"
+            "Mark the border of expanding swelling on the skin with a pen every 15 minutes to help attending clinicians monitor progression."
         )
 
     if any(k in q for k in ["calm", "slow", "spread", "running", "walk"]):
         return (
-            "⏱️ **How to Slow Down Venom Spread:**\n\n"
-            "- **Total Physical Stillness**: Have the person sit or lie down immediately. Do not let them walk or run.\n"
-            "- **Take Slow Breaths**: High anxiety makes the heart pump faster, which pushes venom through the lymphatic system much quicker.\n"
-            "- **Splint the Limb**: Immobilize the arm or leg so muscles don't contract and pump venom. Keep it resting below heart level."
+            "How to Minimize Venom Absorption:\n\n"
+            "- Absolute Physical Rest: The patient must remain recumbent and stationary. Do not permit walking or physical exertion.\n"
+            "- Calm Reassurance: Anxiety elevates heart rate, accelerating lymphatic flow of venom into the systemic circulation.\n"
+            "- Rigid Splinting: Immobilize the limb to prevent muscular contractions. Keep it positioned below the level of the heart."
         )
 
-    # General emergency response
     return (
-        f"🚨 **Emergency Guidance for {snake_type}:**\n\n"
-        f"1. **Stay completely still**: Splint the bitten arm or leg and keep it resting below heart level.\n"
-        f"2. **Take off rings & tight clothes**: Remove rings, watches, and shoes right now before swelling traps them.\n"
-        f"3. **Never cut, suck, ice, or tie a tourniquet.**\n"
-        f"4. **Get to a hospital**: Have someone drive or carry the patient immediately. Dial 112 (or local emergency line) if available."
+        f"Emergency Guidance for {snake_type} Encounter:\n\n"
+        f"1. Immobilize: Keep the patient completely still. Splint the bitten limb below heart level.\n"
+        f"2. Remove constriction: Take off rings, watches, and restrictive clothing immediately.\n"
+        f"3. Avoid harmful actions: Do not cut, suck, apply ice, or use tourniquets.\n"
+        f"4. Seek hospital evaluation: Transport the patient recumbent to an equipped medical center immediately. Dial 112 if dispatch is available."
     )
 
 
 def query_llm_assistant(messages: List[dict], snake_type: str) -> str:
-    """Queries OpenAI or falls back to the offline clinical triage engine."""
     if OPENAI_API_KEY and OPENAI_API_KEY.strip() not in ("", "ENTER_YOUR_API_KEY"):
         try:
             from openai import OpenAI
@@ -124,7 +122,6 @@ def query_llm_assistant(messages: List[dict], snake_type: str) -> str:
         except Exception as exc:
             logger.warning("Legacy OpenAI chat call failed: %s", exc)
 
-    # Offline Emergency Fallback
     last_user_query = messages[-1]["content"] if messages else ""
     return get_offline_medical_response(last_user_query, snake_type=snake_type)
 
@@ -133,7 +130,7 @@ def first_aid_chat(snake_type: str, first_aid: str, hospitals: List[str]):
     if st is None:
         raise RuntimeError("Streamlit is required to render first_aid_chat UI components.")
 
-    st.markdown("### 🏥 Nearby Emergency Hospitals & Clinics")
+    st.markdown("### Nearby Emergency Hospitals")
 
     if hospitals:
         display_limit = 4
@@ -141,14 +138,14 @@ def first_aid_chat(snake_type: str, first_aid: str, hospitals: List[str]):
             st.markdown(f"**{i+1}.** {h}")
 
         if len(hospitals) > display_limit:
-            with st.expander(f"See {len(hospitals) - display_limit} more hospitals nearby"):
+            with st.expander(f"See {len(hospitals) - display_limit} more facilities nearby"):
                 for i, h in enumerate(hospitals[display_limit:], start=display_limit + 1):
                     st.markdown(f"**{i}.** {h}")
     else:
         st.info("No nearby facilities found. Please contact local emergency services immediately.")
 
     st.write("---")
-    st.markdown("### 💬 Ask the First-Aid Assistant")
+    st.markdown("### First-Aid Consultation")
 
     chat_key = "venomguard_chat_history"
     if chat_key not in st.session_state:
@@ -160,15 +157,15 @@ def first_aid_chat(snake_type: str, first_aid: str, hospitals: List[str]):
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
 
-    if user_input := st.chat_input("Ask a question about symptoms, what to do, or hospital prep..."):
+    if user_input := st.chat_input("Ask a question about symptoms, immediate steps, or hospital arrival..."):
         st.session_state[chat_key].append({"role": "user", "content": user_input})
         with st.chat_message("user"):
             st.markdown(user_input)
 
         system_prompt = (
             f"You are VenomGuard's emergency medical assistant for a patient who encountered a {snake_type}. "
-            "Follow official WHO Snakebite Guidelines strictly. Speak calmly, clearly, and naturally without jargon. "
-            "Emphasize calm immobilization and immediate hospital transport. Forbid tourniquets, incisions, and sucking."
+            "Adhere strictly to official WHO Snakebite Guidelines. Provide calm, direct, actionable advice without jargon. "
+            "Emphasize immobilization and immediate hospital transport. Prohibit tourniquets, incisions, and suction."
         )
 
         llm_messages = [{"role": "system", "content": system_prompt}]
@@ -176,7 +173,7 @@ def first_aid_chat(snake_type: str, first_aid: str, hospitals: List[str]):
             llm_messages.append({"role": m["role"], "content": m["content"]})
 
         with st.chat_message("assistant"):
-            with st.spinner("Checking emergency guidance..."):
+            with st.spinner("Reviewing clinical guidance..."):
                 response_text = query_llm_assistant(llm_messages, snake_type=snake_type)
                 st.markdown(response_text)
 
@@ -184,14 +181,13 @@ def first_aid_chat(snake_type: str, first_aid: str, hospitals: List[str]):
 
 
 def only_chat(snake_type: str = "Unknown Snake"):
-    """Standalone VenomChat entry point."""
     first_aid_chat(
         snake_type=snake_type,
         first_aid=(
-            f"👋 Hi there! I'm your **VenomGuard First-Aid Companion**. "
-            f"If someone was bitten or you ran into a snake ({snake_type}), "
-            "I'm here to give you verified steps, warn you about harmful myths, "
-            "and help you get to the right hospital. What's happening right now?"
+            f"Hello. This is the VenomGuard First-Aid Companion. "
+            f"If an individual was bitten or encountered a snake ({snake_type}), "
+            "this interface provides verified WHO first-aid steps, identifies harmful myths, "
+            "and assists in hospital navigation. Please describe the situation."
         ),
         hospitals=[
             "[Search Emergency Hospitals Near Me](https://www.google.com/maps/search/emergency+hospital)"

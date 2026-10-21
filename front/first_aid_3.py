@@ -1,6 +1,6 @@
 """
-VenomGuard - Emergency First Aid & Hospital Navigation
-Presents calm, life-saving steps, dispels myths, and provides direct hospital directions.
+VenomGuard - Emergency First Aid and Hospital Navigation
+Presents verified clinical actions, warns against harmful practices, and routes to hospitals.
 """
 
 from typing import Any, Optional, Tuple
@@ -19,20 +19,19 @@ def first_aid_page(snake_type: str, location: Optional[Tuple[float, float]], op:
 
     is_venomous = "venomous" in danger_level.lower() and "non-venomous" not in danger_level.lower()
 
-    st.markdown("## 🚨 Emergency First Aid & Next Steps")
+    st.markdown("## Emergency First Aid and Action Plan")
 
-    # Quick Emergency Dial Box
     col_call, col_status = st.columns([1.1, 1.9])
     with col_call:
         st.markdown(
             """
-            <div style="background-color: #c0392b; padding: 14px; border-radius: 8px; text-align: center;">
-                <h4 style="color: white; margin: 0 0 6px 0;">📞 Call Emergency Services</h4>
-                <a href="tel:112" style="background-color: white; color: #c0392b; padding: 10px 16px; text-decoration: none; font-weight: bold; border-radius: 6px; display: inline-block;">
-                    ⚡ Tap to Call 112 (Universal)
+            <div style="background-color: #c0392b; padding: 14px; border-radius: 6px; text-align: center;">
+                <h4 style="color: white; margin: 0 0 6px 0;">Emergency Medical Services</h4>
+                <a href="tel:112" style="background-color: white; color: #c0392b; padding: 10px 16px; text-decoration: none; font-weight: bold; border-radius: 4px; display: inline-block;">
+                    Call 112 (Universal Emergency)
                 </a>
                 <p style="color: #fadbd8; font-size: 11px; margin-top: 6px; margin-bottom: 0;">
-                    Or call your local emergency number: 911 (Americas), 108 (India), 999 (UK/Africa)
+                    Or regional numbers: 911 (Americas), 108 (India), 999 (UK/Africa)
                 </p>
             </div>
             """,
@@ -40,22 +39,21 @@ def first_aid_page(snake_type: str, location: Optional[Tuple[float, float]], op:
         )
 
     with col_status:
-        st.markdown(f"**Snake**: **{snake_name}** (*{species_name}*)")
+        st.markdown(f"**Target Species**: {snake_name} (*{species_name}*)")
         if is_venomous:
-            st.error(f"⚠️ **Danger Rating**: {danger_level}")
+            st.error(f"Danger Rating: {danger_level}")
         else:
-            st.success(f"🟢 **Danger Rating**: {danger_level}")
+            st.success(f"Danger Rating: {danger_level}")
         if size_info:
             st.caption(f"Size: {size_info}")
 
     st.write("---")
 
-    # Cache protocol generation
     cache_key_fa = f"fa_content_{snake_name}"
     cache_key_hosp = f"fa_hospitals_{snake_name}"
 
     if cache_key_fa not in st.session_state:
-        with st.spinner("Loading verified medical advice and searching nearby hospitals..."):
+        with st.spinner("Retrieving verified medical advice and hospital directories..."):
             fa_text, hosp_list = tell_first_aid(snake_name, location=location)
             st.session_state[cache_key_fa] = fa_text
             st.session_state[cache_key_hosp] = hosp_list
@@ -67,14 +65,14 @@ def first_aid_page(snake_type: str, location: Optional[Tuple[float, float]], op:
 
     col_dos, col_donts = st.columns(2)
     with col_dos:
-        st.markdown("### 🟢 What to do right now (DO)")
+        st.markdown("### Actions to take immediately (DO)")
         for item in protocol.immediate_dos:
             st.markdown(f"- {item}")
 
     with col_donts:
-        st.markdown("### 🔴 Dangerous myths to avoid (DO NOT)")
+        st.markdown("### Harmful practices to avoid (DO NOT)")
         for item in protocol.critical_donts:
-            st.markdown(f"- ❌ {item}")
+            st.markdown(f"- {item}")
 
     st.write("---")
 

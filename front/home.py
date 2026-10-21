@@ -1,6 +1,6 @@
 """
 VenomGuard - Home Page
-Clean, natural introduction with emergency quick-actions and insights into deadly snakes.
+Introduction with quick actions and reference species details.
 """
 
 from pathlib import Path
@@ -11,57 +11,52 @@ SNAKE_DIR = Path(__file__).resolve().parent.parent / "snake"
 
 
 def home_page():
-    # Website status notice
     st.info(
-        "⚡ **Heads up**: The live website is down for a quick infrastructure refresh right now, "
-        "but it'll be back up very soon! In the meantime, you can test everything right here locally "
-        "or flip on Demo Mode to explore all features."
+        "The live website is temporarily down for an infrastructure update and will be back online shortly. "
+        "You can run the app locally or use Demo Mode to test all features."
     )
 
-    # Hero Banner
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #1f1c2c 0%, #928DAB 100%); padding: 32px 24px; border-radius: 12px; margin-bottom: 24px; text-align: center;">
-        <h1 style='color: #ffffff; font-size: 40px; margin-bottom: 8px; font-weight: 800;'>🛡️ VenomGuard</h1>
-        <h3 style='color: #f0f0f0; font-size: 20px; font-weight: 400; margin-top: 0;'>
-            Identify the snake. Get verified first aid. Find antivenom fast.
+    <div style="background: linear-gradient(135deg, #1f1c2c 0%, #4a5568 100%); padding: 32px 24px; border-radius: 8px; margin-bottom: 24px; text-align: center;">
+        <h1 style='color: #ffffff; font-size: 38px; margin-bottom: 8px; font-weight: 800;'>VenomGuard</h1>
+        <h3 style='color: #edf2f7; font-size: 19px; font-weight: 400; margin-top: 0;'>
+            Snake identification, verified first aid, and antivenom hospital routing
         </h3>
-        <p style='color: #e0e0e0; max-width: 720px; margin: 12px auto 0 auto; font-size: 15px; line-height: 1.6;'>
-            When someone gets bitten, panic and bad advice can be just as dangerous as the venom itself. 
-            VenomGuard gives you clear, verified first aid, identifies snake species from a photo, 
-            and points you straight to the nearest hospital equipped with antivenom.
+        <p style='color: #cbd5e0; max-width: 680px; margin: 12px auto 0 auto; font-size: 15px; line-height: 1.6;'>
+            After a snakebite, bad advice and delay cause serious injury.
+            VenomGuard provides verified WHO first-aid guidance, identifies snake species from a photo,
+            and routes you to the nearest hospital carrying antivenom.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
-    # Action Cards
     col_a1, col_a2, col_a3 = st.columns(3)
 
     with col_a1:
-        st.markdown("#### 📸 Check a Snake Photo")
-        st.write("Upload or take a picture from a safe distance to see if it's venomous and identify the species.")
+        st.markdown("#### Check a Snake Photo")
+        st.write("Upload or take a photo from a safe distance to identify the species and check its venom profile.")
         if st.button("Identify Snake", use_container_width=True):
             st.session_state["new_state"] = "detect"
             rerun_app()
 
     with col_a2:
-        st.markdown("#### 💬 Ask the First-Aid AI")
-        st.write("Have a quick question about symptoms, what to do, or what NOT to do? Chat with our triage assistant.")
-        if st.button("Start VenomChat", use_container_width=True):
+        st.markdown("#### First-Aid Assistant")
+        st.write("Ask questions about symptoms, immediate steps to take, and dangerous practices to avoid.")
+        if st.button("Start First-Aid Chat", use_container_width=True):
             st.session_state["new_state"] = "chat_c1"
             rerun_app()
 
     with col_a3:
-        st.markdown("#### 🌍 Why We Built This")
-        st.write("Read about the global snakebite crisis and how open-source software helps save lives.")
-        if st.button("About & Partnerships", use_container_width=True):
+        st.markdown("#### Background and Mission")
+        st.write("Read about the global burden of snakebites and why open-source tools matter.")
+        if st.button("About the Project", use_container_width=True):
             st.session_state["new_state"] = "about"
             rerun_app()
 
     st.write("---")
 
-    # Top 3 Deadliest Snakes
-    st.markdown("### 🐍 Three of the World's Deadliest Snakes")
-    st.caption("Knowing what lives in your region and how to spot them can keep you safe.")
+    st.markdown("### Reference Species")
+    st.caption("Commonly encountered venomous snakes with high medical significance.")
 
     col1, col2, col3 = st.columns(3)
 
@@ -69,36 +64,36 @@ def home_page():
         it_path = SNAKE_DIR / "Inland-Taipan.jpeg"
         if it_path.exists():
             st.image(Image.open(it_path), use_container_width=True)
-        st.markdown("#### 🥇 Inland Taipan")
+        st.markdown("#### Inland Taipan")
         st.caption("*Oxyuranus microlepidotus* • Central Australia")
         st.write(
-            "Hands down the most toxic venom of any land snake—a single bite has enough venom to kill "
-            "100 full-grown humans. Luckily, it's shy, calm, and lives out in remote clay plains, so people "
-            "rarely run into one in the wild."
+            "Possesses the highest venom yield per toxicity ratio of any land snake. "
+            "A single bite contains enough neurotoxin to kill multiple adult humans. "
+            "It lives in remote clay plains and is rarely encountered by people in the wild."
         )
 
     with col2:
         ct_path = SNAKE_DIR / "Coastal-Taipan.jpeg"
         if ct_path.exists():
             st.image(Image.open(ct_path), use_container_width=True)
-        st.markdown("#### 🥈 Coastal Taipan")
-        st.caption("*Oxyuranus scutellatus* • Northern & Eastern Australia")
+        st.markdown("#### Coastal Taipan")
+        st.caption("*Oxyuranus scutellatus* • Northern and Eastern Australia")
         st.write(
-            "Unlike its inland cousin, the coastal taipan is lightning-fast and nervous. If cornered, "
-            "it strikes repeatedly. Its venom shuts down your nervous system and stops blood from clotting, "
-            "making urgent hospital care essential."
+            "Fast and defensive when cornered. It inhabits coastal grasslands and agricultural areas. "
+            "Its venom causes rapid presynaptic neurotoxicity and prevents blood from clotting, "
+            "requiring immediate antivenom therapy."
         )
 
     with col3:
         kc_path = SNAKE_DIR / "King-Cobra.jpeg"
         if kc_path.exists():
             st.image(Image.open(kc_path), use_container_width=True)
-        st.markdown("#### 🥉 King Cobra")
-        st.caption("*Ophiophagus hannah* • South & Southeast Asia")
+        st.markdown("#### King Cobra")
+        st.caption("*Ophiophagus hannah* • South and Southeast Asia")
         st.write(
-            "The longest venomous snake on Earth, reaching up to 18 feet (5.5m). When threatened, it can lift "
-            "a third of its body straight up and hiss like a growling dog. It delivers a massive dose of "
-            "neurotoxin that can stop human breathing in under 30 minutes."
+            "The longest venomous snake in the world, growing up to 5.5 meters. "
+            "When threatened, it raises the anterior part of its body and hisses loudly. "
+            "It injects high volumes of venom per strike, which can impair breathing within 30 minutes."
         )
 
 

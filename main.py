@@ -1,6 +1,6 @@
 """
-VenomGuard - Main Streamlit Application Controller
-Entry point coordinating page routing, session state, and global UI components.
+VenomGuard - Main Application Controller
+Entry point coordinating page routing, session state, and layout.
 """
 
 from dotenv import load_dotenv
@@ -17,40 +17,35 @@ from front.partner import partner_page
 from front.show_result_2 import show_result
 from front.upload_image_1 import upload_image
 
-# Load environment configuration
 load_dotenv()
 
 
 def rerun_app():
-    """Cross-version Streamlit rerun helper."""
     if hasattr(st, "rerun"):
         st.rerun()
     elif hasattr(st, "experimental_rerun"):
         st.experimental_rerun()
 
 
-# Page configuration
 st.set_page_config(
-    page_title="VenomGuard - AI Snakebite Triage & Hospital Locator",
-    page_icon="🛡️",
+    page_title="VenomGuard - Snakebite Triage and Hospital Locator",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Header Branding
 st.markdown(
     """
     <div style="text-align: center; padding: 10px 0 18px 0;">
         <h1 style='
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            font-size: 44px;
+            font-size: 42px;
             font-weight: 800;
             margin-bottom: 4px;
             letter-spacing: -0.5px;
         '>
-            🛡️ VenomGuard
+            VenomGuard
         </h1>
-        <p style="color: #888888; font-size: 16px; margin: 0;">
+        <p style="color: #888888; font-size: 15px; margin: 0;">
             Open-source snakebite identification, verified first aid, and antivenom hospital locator
         </p>
     </div>
@@ -60,12 +55,10 @@ st.markdown(
 
 st.write("---")
 
-# Initialize routing session state
 if "new_state" not in st.session_state:
     st.session_state["new_state"] = "home"
 
 
-# Sidebar Navigation
 def on_menu_change(key):
     selection = st.session_state[key]
     state_map = {
@@ -82,7 +75,6 @@ def on_menu_change(key):
 menu_items = ["Home", "Identify Snake", "First-Aid Chat", "About the Project", "Partner with Us"]
 icons = ["house", "camera", "chat-dots", "info-circle", "briefcase"]
 
-# Determine active index based on session state
 current_state = st.session_state.get("new_state", "home")
 default_idx = 0
 if current_state == "detect":
@@ -95,7 +87,7 @@ elif current_state == "partner_page":
     default_idx = 4
 
 with st.sidebar:
-    st.markdown("### 🧭 Menu")
+    st.markdown("### Navigation")
     option_menu(
         menu_title=None,
         options=menu_items,
@@ -106,12 +98,12 @@ with st.sidebar:
     )
 
     st.write("---")
-    st.markdown("### 🚨 Emergency Call")
+    st.markdown("### Emergency Call")
     st.markdown(
         """
         <div style="text-align: center; margin-top: 6px;">
-            <a href="tel:112" style="background-color: #e74c3c; color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: bold; display: block;">
-                ⚡ Call 112 (Universal)
+            <a href="tel:112" style="background-color: #c0392b; color: white; padding: 10px 18px; border-radius: 6px; text-decoration: none; font-weight: bold; display: block;">
+                Call 112 (Universal)
             </a>
             <p style="font-size: 11px; color: #888; margin-top: 6px; margin-bottom: 0;">
                 Connects to local emergency medical dispatch.
@@ -122,10 +114,9 @@ with st.sidebar:
     )
 
     st.write("---")
-    st.caption("VenomGuard • Built for SoftBank & UTokyo UGIP Hackathon • Open Source")
+    st.caption("VenomGuard • SoftBank and UTokyo UGIP Hackathon • Open Source")
 
 
-# Main Router
 state = st.session_state.get("new_state", "home")
 
 if state == "home":
@@ -150,7 +141,7 @@ elif state == "detect":
             rerun_app()
         else:
             st.session_state["new_state"] = "error"
-            st.session_state["error_message"] = "We couldn't spot a snake in that photo. Please try another shot."
+            st.session_state["error_message"] = "No snake was detected in the photo. Please try another image."
             rerun_app()
 
 elif state == "show_result":
