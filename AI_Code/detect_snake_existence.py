@@ -334,8 +334,8 @@ class DetectSnakeExistence:
                 is_scientific = True
         else:
             # Difflib standard library fallback
-            close_common = difflib.get_close_matches(snake_type, common_names, n=1, cutoff=0.5)
-            close_sci = difflib.get_close_matches(snake_type, sci_names, n=1, cutoff=0.5)
+            close_common = difflib.get_close_matches(snake_type, common_names, n=1, cutoff=0.7)
+            close_sci = difflib.get_close_matches(snake_type, sci_names, n=1, cutoff=0.7)
             if close_common:
                 best_choice = close_common[0]
             elif close_sci:
