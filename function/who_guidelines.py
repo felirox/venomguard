@@ -3,8 +3,7 @@ VenomGuard - WHO Snakebite Emergency First Aid & Clinical Triage Engine
 Compliant with World Health Organization (WHO) Guidelines for the Clinical Management
 of Snakebite in Africa, Asia, and Latin America.
 
-Provides verified, life-saving first-aid instructions, dispels lethal folk myths,
-and supplies syndromic triage recommendations that function completely offline.
+Written in natural, calm, plain-English emergency guidance that anyone can understand in seconds.
 """
 
 from dataclasses import dataclass, field
@@ -44,44 +43,44 @@ class FirstAidProtocol:
 
 ---
 
-#### 🟢 Immediate Actions to Take (DO):
+#### 🟢 What to do right now (DO):
 {dos_md}
 
 ---
 
-#### 🔴 Dangerous Practices to Avoid (DO NOT):
+#### 🔴 Dangerous myths to avoid (DO NOT):
 {donts_md}
 
 ---
 
-#### 🩺 Expected Symptoms & Warning Signs:
+#### 🩺 Symptoms and warning signs to watch for:
 {symptoms_md}
 
 ---
 
-#### 🚑 Urgent Transport & Hospital Advice:
+#### 🚑 Urgent Hospital Advice:
 {self.evacuation_advice}
 """
 
 
-# Standard WHO DOs and DONTs
+# Standard WHO DOs and DONTs (in clear, natural, crisis-ready English)
 WHO_UNIVERSAL_DOS = [
-    "**Keep the victim calm and still**: Movement accelerates venom absorption into the bloodstream and lymphatic system.",
-    "**Immobilize the bitten limb**: Splint the affected leg or arm and apply a broad crepe bandage at comfortable tension (like for a sprained ankle). Keep the limb at or slightly below heart level.",
-    "**Remove constricting items immediately**: Take off rings, bracelets, watches, tight shoes, and restrictive garments before swelling develops.",
-    "**Clean the wound gently**: If clean water is available, rinse the bite site very gently. Do not scrub or manipulate the puncture holes.",
-    "**Record time and track symptoms**: Note the exact time of the bite. Mark the leading edge of swelling on the skin with a pen every 15 minutes.",
-    "**Safely note snake characteristics**: If possible, photograph the snake from a safe distance (minimum 2 meters) or remember color patterns. NEVER attempt to catch, corner, or kill the snake.",
-    "**Arrange immediate transport**: Transport the victim lying down on a stretcher or vehicle to a hospital capable of administering antivenom and supportive airway care."
+    "**Keep the victim completely calm and still**: Any physical movement or running makes the heart pump faster, which speeds up venom circulation.",
+    "**Immobilize the bitten limb**: Splint the affected arm or leg so joints can't bend, and wrap a broad bandage firmly (snug like wrapping a sprained ankle, but not cutting off blood). Keep the limb at or slightly below heart level.",
+    "**Remove constricting jewelry and clothing immediately**: Take off rings, bracelets, watches, and tight footwear before swelling begins—once swelling starts, rings can cut off circulation.",
+    "**Clean the wound gently**: If clean water is available, gently rinse the bite area. Do not scrub or squeeze the puncture marks.",
+    "**Track the time and watch symptoms**: Write down the exact time of the bite. Mark the border of any swelling on the skin with a pen every 15 minutes so doctors can see how fast it's spreading.",
+    "**Safely remember or photograph the snake**: If safe, snap a photo from at least 2 meters away. NEVER try to catch, corner, or kill the snake.",
+    "**Head straight to the hospital**: Carry the patient or drive them while keeping them lying down. Do not let them walk."
 ]
 
 WHO_UNIVERSAL_DONTS = [
-    "**DO NOT apply a tight arterial tourniquet**: Arterial tourniquets cut off blood supply, leading to ischemia, gangrene, and amputation, while causing a fatal venom surge when released.",
-    "**DO NOT cut or incise the bite wound**: Cutting lacerates nerves, tendons, and arteries, and introduces catastrophic secondary infection.",
-    "**DO NOT attempt to suck out venom**: Mouth or mechanical suction devices are completely ineffective and expose the rescuer to venom while infecting the wound.",
-    "**DO NOT apply ice, cold packs, or chemicals**: Extreme cold accelerates local tissue necrosis and causes frostbite over compromised tissue.",
-    "**DO NOT administer traditional herbs, electrical shocks, or folk remedies**: These delay genuine hospital treatment and frequently cause fatal sepsis or kidney failure.",
-    "**DO NOT give alcohol, aspirin, or stimulants**: Aspirin exacerbates hemotoxic bleeding, and alcohol impairs medical neurological assessment."
+    "**DO NOT apply a tight arterial tourniquet**: Tourniquets cut off blood flow, causing gangrene and loss of the limb. When loosened, they cause a deadly rush of trapped venom straight to the heart and lungs.",
+    "**DO NOT cut or slash the bite wound**: Cutting with knives or razor blades damages nerves, tendons, and arteries, causes severe bleeding, and leads to nasty infections.",
+    "**DO NOT try to suck out the venom**: Sucking venom with your mouth or suction devices is a movie myth that doesn't work. It damages tissue and injects mouth bacteria directly into the wound.",
+    "**DO NOT apply ice or cold packs**: Ice accelerates tissue death and causes frostbite over already damaged flesh.",
+    "**DO NOT waste time on folk remedies or electric shocks**: Herbs, black stones, and shocks are ineffective and waste precious minutes needed for antivenom.",
+    "**DO NOT give alcohol, pain relievers like aspirin, or caffeine**: Aspirin worsens bleeding from hemotoxic venoms, and alcohol clouds clinical evaluation."
 ]
 
 
@@ -97,13 +96,13 @@ def classify_venom_syndrome(snake_name: str, toxicity_text: str = "") -> Dict[st
         return {
             "syndrome": "Neurotoxic Envenomation",
             "symptoms": [
-                "Bilateral ptosis (drooping eyelids) - earliest hallmark sign",
-                "Diplopia (double vision) and difficulty swallowing or speaking",
-                "Progressive descending muscle weakness and limb flaccidity",
-                "Respiratory muscle paralysis leading to asphyxiation if untreated",
-                "Excessive salivation and sweating"
+                "Heavy, drooping eyelids (ptosis) — often the very first sign",
+                "Double vision and difficulty swallowing or speaking clearly",
+                "Limb weakness and heavy feeling in arms or legs",
+                "Shortness of breath and difficulty breathing (urgent danger)",
+                "Excess saliva and sweating"
             ],
-            "priority": "CRITICAL EMERGENCY - Risk of rapid respiratory arrest within 30-180 minutes."
+            "priority": "CRITICAL EMERGENCY — Risk of breathing paralysis within 30 to 180 minutes."
         }
 
     # Hemotoxic / Cytotoxic syndrome (Vipers, Adders, Pit Vipers)
@@ -111,13 +110,13 @@ def classify_venom_syndrome(snake_name: str, toxicity_text: str = "") -> Dict[st
         return {
             "syndrome": "Hemotoxic / Cytotoxic (Vasculotoxic) Envenomation",
             "symptoms": [
-                "Rapid severe local pain and expanding swelling around the bite site",
-                "Spontaneous systemic bleeding (gums, nose, puncture sites, urine)",
-                "Extensive bruising (ecchymosis) and blood-filled blistering (bullae)",
-                "Coagulopathy and internal hemorrhage risk",
-                "Tissue necrosis requiring wound debridement or surgical monitoring"
+                "Intense burning pain and rapidly spreading swelling around the bite",
+                "Bleeding from bite marks, gums, nose, or urine that won't stop",
+                "Dark purple bruising and blood blisters forming under the skin",
+                "Feeling faint, dizzy, or light-headed",
+                "Severe tissue swelling that can damage muscles if untreated"
             ],
-            "priority": "HIGH EMERGENCY - Risk of hypovolemic shock, massive tissue necrosis, and renal failure."
+            "priority": "HIGH EMERGENCY — Risk of internal bleeding, severe swelling, and kidney damage."
         }
 
     # Default / Unknown venomous
@@ -125,24 +124,24 @@ def classify_venom_syndrome(snake_name: str, toxicity_text: str = "") -> Dict[st
         return {
             "syndrome": "Potentially Severe Envenomation",
             "symptoms": [
-                "Local pain, swelling, and redness progressing along the limb",
-                "Nausea, dizziness, abdominal pain, or abnormal sweating",
-                "Bleeding from bite punctures or systemic bleeding points",
-                "Muscle weakness, numbness, or breathing difficulty"
+                "Spreading pain, swelling, and redness moving up the limb",
+                "Nausea, dizziness, cold sweat, or stomach cramps",
+                "Persistent oozing of blood from the puncture marks",
+                "Any numbness, tingling, or shortness of breath"
             ],
-            "priority": "HIGH EMERGENCY - Requires urgent medical triage and 24-hour observation."
+            "priority": "HIGH EMERGENCY — Requires hospital observation for at least 24 hours."
         }
 
     # Non-venomous
     return {
         "syndrome": "Non-Venomous Bite (Low Systemic Risk)",
         "symptoms": [
-            "Minor localized scratches or superficial puncture wounds",
-            "Mild localized discomfort and erythema",
-            "Minimal swelling without progressive spread",
-            "Tetanus infection risk if wound care is neglected"
+            "Shallow scratches or puncture marks without spreading swelling",
+            "Mild localized stinging or redness",
+            "No drooping eyes, no trouble breathing, no bleeding from gums",
+            "Risk of ordinary bacterial wound infection or tetanus"
         ],
-        "priority": "STANDARD MEDICAL CARE - Clean wound thoroughly, verify tetanus prophylaxis, monitor for bacterial infection."
+        "priority": "STANDARD MEDICAL CARE — Clean well with soap and water, apply antiseptic, and verify your tetanus booster."
     }
 
 
@@ -154,12 +153,12 @@ def get_who_protocol(snake_name: str, toxicity_text: str = "") -> FirstAidProtoc
     danger_cat = "Harmless / Mild" if is_non_venomous else "Hazardous - Antivenom Evaluation Mandatory"
 
     evac_advice = (
-        "While non-venomous bites do not require antivenom, the patient should visit a local clinic "
-        "for antiseptic wound cleaning and a tetanus vaccination booster."
+        "While this bite is non-venomous and doesn't require antivenom, please visit a local clinic "
+        "to get the puncture wounds cleaned properly and check if you need a tetanus shot."
         if is_non_venomous
         else (
-            f"**URGENT**: {syndrome_info['priority']} Immediately dispatch or transport the patient to an emergency "
-            "hospital equipped with intensive care support (ventilators) and antivenom stock. Keep patient horizontal and stationary during transit."
+            f"**URGENT**: {syndrome_info['priority']} Head immediately to the nearest hospital equipped with "
+            "antivenom and emergency airway support. Keep the patient completely still and lying down on the way."
         )
     )
 

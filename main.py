@@ -31,7 +31,7 @@ def rerun_app():
 
 # Page configuration
 st.set_page_config(
-    page_title="VenomGuard - AI Snakebite Management System",
+    page_title="VenomGuard - AI Snakebite Triage & Hospital Locator",
     page_icon="🛡️",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -40,7 +40,7 @@ st.set_page_config(
 # Header Branding
 st.markdown(
     """
-    <div style="text-align: center; padding: 10px 0 20px 0;">
+    <div style="text-align: center; padding: 10px 0 18px 0;">
         <h1 style='
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             font-size: 44px;
@@ -51,7 +51,7 @@ st.markdown(
             🛡️ VenomGuard
         </h1>
         <p style="color: #888888; font-size: 16px; margin: 0;">
-            Next-Gen Open-Source Snakebite Management System
+            Open-source snakebite identification, verified first aid, and antivenom hospital locator
         </p>
     </div>
     """,
@@ -70,16 +70,16 @@ def on_menu_change(key):
     selection = st.session_state[key]
     state_map = {
         "Home": "home",
-        "Detect Snake": "detect",
-        "VenomChat": "chat_c1",
-        "About": "about",
+        "Identify Snake": "detect",
+        "First-Aid Chat": "chat_c1",
+        "About the Project": "about",
         "Partner with Us": "partner_page",
     }
     if selection in state_map:
         st.session_state["new_state"] = state_map[selection]
 
 
-menu_items = ["Home", "Detect Snake", "VenomChat", "About", "Partner with Us"]
+menu_items = ["Home", "Identify Snake", "First-Aid Chat", "About the Project", "Partner with Us"]
 icons = ["house", "camera", "chat-dots", "info-circle", "briefcase"]
 
 # Determine active index based on session state
@@ -95,7 +95,7 @@ elif current_state == "partner_page":
     default_idx = 4
 
 with st.sidebar:
-    st.markdown("### 🧭 Navigation")
+    st.markdown("### 🧭 Menu")
     option_menu(
         menu_title=None,
         options=menu_items,
@@ -106,15 +106,15 @@ with st.sidebar:
     )
 
     st.write("---")
-    st.markdown("### 🚨 Rapid Emergency Call")
+    st.markdown("### 🚨 Emergency Call")
     st.markdown(
         """
         <div style="text-align: center; margin-top: 6px;">
             <a href="tel:112" style="background-color: #e74c3c; color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: bold; display: block;">
-                ⚡ Dial 112 (Universal)
+                ⚡ Call 112 (Universal)
             </a>
             <p style="font-size: 11px; color: #888; margin-top: 6px; margin-bottom: 0;">
-                Connects to emergency medical dispatcher.
+                Connects to local emergency medical dispatch.
             </p>
         </div>
         """,
@@ -122,7 +122,7 @@ with st.sidebar:
     )
 
     st.write("---")
-    st.caption("VenomGuard v2.0 • Open Source Public Health Initiative")
+    st.caption("VenomGuard • Built for SoftBank & UTokyo UGIP Hackathon • Open Source")
 
 
 # Main Router
@@ -150,7 +150,7 @@ elif state == "detect":
             rerun_app()
         else:
             st.session_state["new_state"] = "error"
-            st.session_state["error_message"] = "No snake could be detected in the provided image. Please try again."
+            st.session_state["error_message"] = "We couldn't spot a snake in that photo. Please try another shot."
             rerun_app()
 
 elif state == "show_result":

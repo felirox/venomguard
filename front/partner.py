@@ -1,7 +1,6 @@
 """
-VenomGuard - Partnership & Institutional Collaboration View
-Outlines collaboration opportunities for healthcare networks, corporate CSR,
-government ministries of health, and international NGOs.
+VenomGuard - Partner With Us
+Clear, grounded partnership avenues for clinics, health departments, and sponsors.
 """
 
 import streamlit as st
@@ -9,66 +8,56 @@ import streamlit as st
 
 def partner_page():
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 22px; border-radius: 12px; margin-bottom: 24px; text-align: center;">
-        <h2 style='color: white; margin: 0;'>🤝 Partner with VenomGuard</h2>
+    <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 24px; border-radius: 12px; margin-bottom: 24px; text-align: center;">
+        <h2 style='color: white; margin: 0; font-weight: 800;'>🤝 Partner with VenomGuard</h2>
         <p style='color: #f1f8f5; margin-top: 6px; font-size: 16px;'>
-            Join us in reducing snakebite fatalities and disabilities worldwide through open technology
+            Let's work together to get better snakebite triage tools to the communities that need them most.
         </p>
     </div>
     """, unsafe_allow_html=True)
 
     st.markdown("""
-    At VenomGuard, we believe eradicating preventable snakebite deaths requires coordinated global action.
-    We collaborate across three core sectors:
+    Preventing snakebite fatalities isn't just a software problem—it requires cold-chain logistics, 
+    antivenom supplies, and well-trained health workers. We collaborate with partners across three main areas:
     """)
 
     tab_gov, tab_corp, tab_ngo = st.tabs([
-        "🏛️ Government & Ministries of Health",
-        "🏢 Healthcare Industry & Corporate CSR",
-        "🌍 NGOs & Academic Researchers"
+        "🏛️ Health Departments & Rural Clinics",
+        "🏢 Healthcare Industry & CSR Sponsors",
+        "🌍 Researchers & Field Non-Profits"
     ])
 
     with tab_gov:
-        st.markdown("### 🏛️ Public Health & National Emergency Frameworks")
+        st.markdown("### 🏛️ For Regional Health Authorities & Public Clinics")
         st.markdown("""
-        National health authorities in snakebite-endemic regions can integrate VenomGuard directly into their rural health infrastructure:
+        If you run or support rural healthcare facilities in snakebite-endemic regions, we want to help you deploy VenomGuard locally:
         
-        1. **Emergency Dispatch Integration**: Connect VenomGuard's triage stream directly with national emergency dispatch numbers (e.g., 108 in India, 112 in GSM zones).
-        2. **Antivenom Stockpile Tracking**: Real-time visibility into regional antivenom inventories at district hospital level to route patients only to stocked clinics.
-        3. **Community Healthcare Worker Triage**: Equipping rural field workers (e.g. ASHA workers in India, community health extensionists) with offline detection tools.
-        4. **Epidemiological Surveillance**: Anonymized incidence heatmaps informing national antivenom procurement and deployment.
+        - **Emergency Dispatch Integration**: Link VenomGuard directly into your local ambulance lines (e.g., 108 in India or 112 in GSM networks).
+        - **Antivenom Stock Audits**: Help us keep an up-to-date registry of which hospitals currently stock monovalent and polyvalent antivenom.
+        - **Field Worker Toolkits**: Put lightweight offline snake identification in the hands of community health extensionists and rural clinic nurses.
+        - **Incident Mapping**: Aggregate anonymized, community-level encounter data to predict seasonal snakebite spikes.
         """)
 
     with tab_corp:
-        st.markdown("### 🏢 Corporate Social Responsibility & Pharmaceutical Partnerships")
+        st.markdown("### 🏢 For CSR Programs & Tech Sponsors")
         st.markdown("""
-        We partner with pharmaceutical companies, technology leaders, and medical device manufacturers to scale global life-saving access:
+        We are proud to partner with tech companies, medical device makers, and philanthropic foundations:
         
-        - **Antivenom Subsidization**: Direct funding channel subsidizing costly antivenom vials for impoverished agricultural families.
-        - **Compute & Model Training**: Cloud compute credits powering continuous model retraining on expansive field photography datasets.
-        - **Cold-Chain Logistics**: Partnerships ensuring rapid distribution of temperature-sensitive antivenoms to remote rural health posts.
-        - **Brand Visibility & CSR Impact**: Transparent impact reporting tracking verified lives saved and clinics equipped.
+        - **Subsidizing Antivenom Access**: Direct financial grants to cover antivenom vials for low-income agricultural families who cannot afford treatment.
+        - **Model Training & Cloud Infrastructure**: Cloud compute credits that allow us to expand our computer vision models to hundreds of rare species.
+        - **Cold-Chain Logistics Support**: Helping rural clinics maintain the refrigeration required to keep antivenom potent.
         """)
 
-        st.markdown("#### Partnership Recognition Tiers")
-        c1, c2, c3 = st.columns(3)
-        with c1:
-            st.info("**Silver Partner**\n- Recognition in annual impact report\n- Community outreach alignment\n- Direct clinic subsidy tracking")
-        with c2:
-            st.success("**Gold Partner**\n- Priority feature in antivenom directory\n- Joint press releases & global health forum representation\n- Regional deployment sponsorship")
-        with c3:
-            st.warning("**Platinum Partner**\n- Strategic advisory board position\n- Co-developed regional AI models\n- High-impact national deployment programs")
-
     with tab_ngo:
-        st.markdown("### 🌍 NGOs, MSF, and Academic Researchers")
+        st.markdown("### 🌍 For Herpetologists, Doctors & Field NGOs")
         st.markdown("""
-        VenomGuard welcomes active research collaboration with international organizations:
+        If you work on the front lines of global health, wilderness safety, or herpetology, we'd love your expertise:
         
-        - **Data Sharing**: Open exchange of anonymized bite records, clinical outcomes, and regional herpetological sightings.
-        - **Field Clinical Trials**: Validating model accuracy in real-world clinical triage conditions across Africa and Southeast Asia.
-        - **Educational Curriculum**: Co-authoring multilingual educational posters and mobile first-aid guides to dispel lethal snakebite folk myths.
+        - **Data Donations**: Share verified field photos to improve our detection accuracy for underrepresented species.
+        - **Clinical Review**: Help verify first-aid guidelines for specialized regional venom profiles (e.g. sea snakes, rear-fanged colubrids).
+        - **Language Localization**: Help translate first-aid advice into local dialects so anyone can read it during an emergency.
         """)
 
     st.write("---")
-    st.markdown("### 📬 Get in Touch with the VenomGuard Team")
-    st.markdown("To explore a pilot deployment or institutional partnership, reach out to our team at **partners@venomguard.org** or connect via [niran.dev](https://niran.dev/).")
+    st.markdown("### 📬 Get in Touch")
+    st.markdown("Interested in working together or running a pilot? Drop a message to **partners@venomguard.org** or connect via [niran.dev](https://niran.dev/).")

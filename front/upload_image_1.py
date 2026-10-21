@@ -1,11 +1,11 @@
 """
-VenomGuard - Image Upload & Detection Interface
-Handles camera capture, image uploads, demo sample images, and initial geolocation.
+VenomGuard - Photo Upload & Identification Form
+Natural, user-friendly interface for camera capture, file upload, and incident location.
 """
 
 from pathlib import Path
 import random
-from typing import Optional, Tuple
+from typing import Optional
 
 import numpy as np
 from PIL import Image
@@ -19,31 +19,27 @@ EXAMPLES_DIR = Path(__file__).resolve().parent.parent / "AI_Code" / "Dataset" / 
 
 
 def upload_image():
-    """
-    Renders the image submission form and performs snake detection & classification.
-    Returns: (state, image, address, latlng, op)
-    """
-    st.markdown("## 📸 Snake Presence & Species Identification")
+    st.markdown("## 📸 Snake Identification")
     st.markdown(
-        "Upload a clear photograph of the snake, or use your device camera. "
-        "Keep a safe distance of at least 2 meters from any live snake."
+        "Upload a photo or snap one with your camera. "
+        "**Safety first**: Always keep at least 6 feet (2 meters) away from any live snake. Never try to catch or corner it."
     )
 
     with st.form(key="snake_detection_form"):
         mode = st.selectbox(
-            "Select Input Source:",
+            "How would you like to provide the picture?",
             [
-                "Upload from Device / Camera",
-                "[Demo Mode] Use Pre-loaded Sample Snake Image"
+                "Upload a photo or take one now",
+                "Try with a pre-loaded sample photo (Demo Mode)"
             ]
         )
 
         image: Optional[Image.Image] = None
 
-        if mode == "Upload from Device / Camera":
+        if mode == "Upload a photo or take one now":
             col_cam, col_file = st.columns(2)
             with col_cam:
-                camera_file = st.camera_input("Take a photo (stay at safe distance)")
+                camera_file = st.camera_input("Take a photo (stay back!)")
             with col_file:
                 uploaded_file = st.file_uploader("Or upload an image file", type=["jpeg", "jpg", "png", "webp"])
 
@@ -52,58 +48,55 @@ def upload_image():
             elif uploaded_file is not None:
                 image = Image.open(uploaded_file)
         else:
-            # Demo Mode
             sample_files = list(EXAMPLES_DIR.glob("*.*")) if EXAMPLES_DIR.exists() else []
             if sample_files:
                 chosen = random.choice(sample_files)
                 image = Image.open(chosen)
-                st.info(f"Loaded sample image for testing: `{chosen.name}`")
+                st.info(f"Loaded test sample: `{chosen.name}`")
             else:
-                st.warning("No sample images found in Dataset/examples. Please upload an image.")
+                st.warning("No sample files found in Dataset/examples. Please upload a photo.")
 
         if image is not None:
-            st.image(image, caption="Image for Snake Analysis", use_container_width=True)
+            st.image(image, caption="Photo to analyze", use_container_width=True)
 
         st.markdown("---")
-        st.markdown("### 📍 Incident Location")
-        st.markdown("Accurate location ensures routing to the closest hospital equipped with appropriate antivenom.")
+        st.markdown("### 📍 Where are you located?")
+        st.markdown("We use this to find the closest hospitals stocked with antivenom.")
 
-        # Geolocation lookup
         lat, lng = get_latitude_longitude()
         initial_address = get_address_from_coordinates_geopy(lat, lng)
 
         user_address = st.text_area(
-            "Verify or correct your current address / city:",
+            "Confirm or adjust your city / area:",
             value=initial_address,
             key="location_address_input",
-            help="Enter your current city, district, or landmark."
+            help="Type your city, district, or landmark if the detected location looks off."
         )
 
         submit_button = st.form_submit_button(
-            label="🔍 Analyze Image & Determine Danger Level",
+            label="🔍 Analyze Photo & Get First Aid",
             use_container_width=True
         )
 
     if submit_button:
         if image is None:
-            st.warning("⚠️ Please provide an image (take a picture, upload a file, or select Demo Mode).")
+            st.warning("⚠️ Please snap a photo or upload an image first, or switch to Demo Mode.")
             return None
 
-        with st.spinner("Analyzing image for snake presence and taxonomic features..."):
+        with st.spinner("Analyzing image for snake species and venom profile..."):
             img_array = np.array(image)
             is_present = ai_snake.get_snake_existence(img_array)
 
             latlng = address_to_latlng(user_address) or (lat, lng)
 
             if not is_present:
-                st.error("No snake was detected in the submitted image. Please retry with a clearer photo.")
+                st.error("We couldn't clearly detect a snake in this photo. Please try another shot.")
                 return "error", image, user_address, latlng, False
 
-            # Identify species
             snake_type = ai_snake.get_snake_type()
             op = ai_snake.get_snake_detailed_info(snake_type)
 
-            st.success(f"Snake detected: **{op[0]}** ({op[1]})")
+            st.success(f"Identified: **{op[0]}** (*{op[1]}*)")
             return "show_result", image, user_address, latlng, op
 
     return None
