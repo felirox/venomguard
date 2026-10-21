@@ -1,174 +1,109 @@
-import streamlit as st 
-from PIL import Image
+"""
+VenomGuard - Image Upload & Detection Interface
+Handles camera capture, image uploads, demo sample images, and initial geolocation.
+"""
+
+from pathlib import Path
+import random
+from typing import Optional, Tuple
+
 import numpy as np
-from function.location import get_latitude_longitude
-from function.location import get_address_from_coordinates_geopy
-from function.location import address_to_latlng
+from PIL import Image
+import streamlit as st
+
 from AI_Code.detect_snake_existence import DetectSnakeExistence
-import random, os
+from function.location import address_to_latlng, get_address_from_coordinates_geopy, get_latitude_longitude
 
 ai_snake = DetectSnakeExistence()
-
-
-# def upload_image():
-#     hackathon_mode = st.button('[Hackathon Mode] Use a random snake image to test the app')
-#     image = None
-#     address = None
-#     with st.form(key='Snake Image'):
-#         st.markdown("## How does a snake look?")
-#         image_input = st.camera_input("Take a picture")
-#         uploaded_file = st.file_uploader("Or upload the snake image.", type=["jpeg","jpg", "png"])
-#         hackathon_mode = st.button('[Hackathon Mode] Use a random snake image to test the app')
-
-#         image = None
-#         if image_input is not None:
-#             # Handle camera input
-#             image = Image.open(image_input)
-#         elif uploaded_file is not None:
-#             # Handle file upload
-#             image = Image.open(uploaded_file)
-#         elif hackathon_mode:
-#             # Select a random image from the sample_images directory
-#             sample_images_dir = 'AI_Code/Dataset/examples'
-#             random_image_name = random.choice(os.listdir(sample_images_dir))
-#             random_image_path = os.path.join(sample_images_dir, random_image_name)
-#             image = Image.open(random_image_path)
-#         else:
-#             st.error("Please upload a valid image or use the camera to take a picture of a snake.")
-#             st.session_state["new_state"] = "error"
-#             st.session_state["error_message"] = "No Snake Found in the Image. Please retry"  # Assuming the second element is the error message
-#             st.experimental_rerun()
-            
-        
-#         if image is not None:
-#             img_array = np.array(image)
-#             st.image(img_array, caption="Image of snake", use_column_width=True)
-        
-#         # Tell us your current location
-#         latitude, longitude = get_latitude_longitude()
-#         address = get_address_from_coordinates_geopy(latitude, longitude)
-#         st.markdown("***")
-#         st.markdown("## Tell us your current location.")
-#         st.markdown("#### Your Location")
-#         # st.markdown(f"Latitude:{latitude}, Longitude:{longitude}")
-#         st.markdown(f"Address:{address}")
-#         address = st.text_area('Correct the address if there is any error.',
-#                                           value=address,
-#                                           key='address_w')
-        
-#         print(f"latitude:{latitude}, longitude:{longitude}")
-        
-#         submit_button = st.form_submit_button(label='Proceed to next step')
-        
-#     if submit_button and image is not None:
-#         print("Debug:",image)
-#         # TODO!!!!
-#         img_array = np.array(image)  # Ensure we have the image in numpy array format
-#         detection_result = ai_snake.get_snake_existence(img_array)
-#         state = "show_result"
-#         latlng = address_to_latlng(address)
-            
-#         # Display the detection result
-#         if detection_result:
-#             st.success("Snake detected in the image.")
-#             snake_type = ai_snake.get_snake_type()
-#             op = ai_snake.get_snake_detailed_info(snake_type)
-#             if  "venomous" in op[2]:
-#                 state = "show_result"
-                
-#                 st.success("It's venomous")
-#             else:
-#                 state = "error"
-#                 st.error("It's not venomous")
-                
-#             return state, image, address, latlng, op
-#             # Proceed to next step
-#         else:
-#             state = "error"
-#             st.markdown("No snake detected in the image.")
-#             st.error("No snake detected in the image.")
-#             #Raise a warning to user to tell them to upload a valid image
-#             # state = "upload_image"
-#             return state, image, address, latlng, False
-
-################### REWRITING ###################
+EXAMPLES_DIR = Path(__file__).resolve().parent.parent / "AI_Code" / "Dataset" / "examples"
 
 
 def upload_image():
-    with st.form(key='Snake Image'):
-        st.markdown("## How does a snake look?")
-        
-        # Using selectbox as a mode selector
+    """
+    Renders the image submission form and performs snake detection & classification.
+    Returns: (state, image, address, latlng, op)
+    """
+    st.markdown("## 📸 Snake Presence & Species Identification")
+    st.markdown(
+        "Upload a clear photograph of the snake, or use your device camera. "
+        "Keep a safe distance of at least 2 meters from any live snake."
+    )
+
+    with st.form(key="snake_detection_form"):
         mode = st.selectbox(
-            "Choose mode:",
-            ["Normal Mode", "[Hackathon Mode!] Use a random snake image to test the app"]
+            "Select Input Source:",
+            [
+                "Upload from Device / Camera",
+                "[Demo Mode] Use Pre-loaded Sample Snake Image"
+            ]
         )
 
-        image = None
+        image: Optional[Image.Image] = None
 
-        # Conditionally display input options based on the selected mode
-        if mode == "Normal Mode":
-            image_input = st.camera_input("Take a picture")
-            uploaded_file = st.file_uploader("Or upload the snake image.", type=["jpeg", "png"])
+        if mode == "Upload from Device / Camera":
+            col_cam, col_file = st.columns(2)
+            with col_cam:
+                camera_file = st.camera_input("Take a photo (stay at safe distance)")
+            with col_file:
+                uploaded_file = st.file_uploader("Or upload an image file", type=["jpeg", "jpg", "png", "webp"])
 
-            # Check for image input or file upload
-            if image_input:
-                image = Image.open(image_input)
-            elif uploaded_file:
+            if camera_file is not None:
+                image = Image.open(camera_file)
+            elif uploaded_file is not None:
                 image = Image.open(uploaded_file)
-        else:  # Hackathon Mode logic
-            # Immediately load a random image without waiting for form submission
-            sample_images_dir = 'AI_Code/Dataset/examples'
-            random_image_name = random.choice(os.listdir(sample_images_dir))
-            random_image_path = os.path.join(sample_images_dir, random_image_name)
-            image = Image.open(random_image_path)
-            # Display the randomly selected image
-            img_array = np.array(image)
-            st.image(img_array, caption="Randomly Selected Image", use_column_width=True)
+        else:
+            # Demo Mode
+            sample_files = list(EXAMPLES_DIR.glob("*.*")) if EXAMPLES_DIR.exists() else []
+            if sample_files:
+                chosen = random.choice(sample_files)
+                image = Image.open(chosen)
+                st.info(f"Loaded sample image for testing: `{chosen.name}`")
+            else:
+                st.warning("No sample images found in Dataset/examples. Please upload an image.")
 
-        # Tell us your current location
-        latitude, longitude = get_latitude_longitude()
-        address = get_address_from_coordinates_geopy(latitude, longitude)
-        st.markdown("***")
-        st.markdown("## Tell us your current location.")
-        st.markdown("#### Your Location")
-        # st.markdown(f"Latitude:{latitude}, Longitude:{longitude}")
-        st.markdown(f"Address:{address}")
-        address = st.text_area('Correct the address if there is any error.',
-                                          value=address,
-                                          key='address_w')
-        
-        print(f"latitude:{latitude}, longitude:{longitude}")
-        
-        submit_button = st.form_submit_button(label='Proceed to next step')
-        
-    if submit_button and image is not None:
-        print("Debug:",image)
-        # TODO!!!!
-        img_array = np.array(image)  # Ensure we have the image in numpy array format
-        detection_result = ai_snake.get_snake_existence(img_array)
-        state = "show_result"
-        latlng = address_to_latlng(address)
-            
-        # Display the detection result
-        if detection_result:
-            st.success("Snake detected in the image.")
+        if image is not None:
+            st.image(image, caption="Image for Snake Analysis", use_container_width=True)
+
+        st.markdown("---")
+        st.markdown("### 📍 Incident Location")
+        st.markdown("Accurate location ensures routing to the closest hospital equipped with appropriate antivenom.")
+
+        # Geolocation lookup
+        lat, lng = get_latitude_longitude()
+        initial_address = get_address_from_coordinates_geopy(lat, lng)
+
+        user_address = st.text_area(
+            "Verify or correct your current address / city:",
+            value=initial_address,
+            key="location_address_input",
+            help="Enter your current city, district, or landmark."
+        )
+
+        submit_button = st.form_submit_button(
+            label="🔍 Analyze Image & Determine Danger Level",
+            use_container_width=True
+        )
+
+    if submit_button:
+        if image is None:
+            st.warning("⚠️ Please provide an image (take a picture, upload a file, or select Demo Mode).")
+            return None
+
+        with st.spinner("Analyzing image for snake presence and taxonomic features..."):
+            img_array = np.array(image)
+            is_present = ai_snake.get_snake_existence(img_array)
+
+            latlng = address_to_latlng(user_address) or (lat, lng)
+
+            if not is_present:
+                st.error("No snake was detected in the submitted image. Please retry with a clearer photo.")
+                return "error", image, user_address, latlng, False
+
+            # Identify species
             snake_type = ai_snake.get_snake_type()
             op = ai_snake.get_snake_detailed_info(snake_type)
-            if  "venomous" in op[2]:
-                state = "first_aid"
-                
-                st.success("It's venomous")
-            else:
-                state = "error"
-                st.error("It's not venomous")
-                
-            return state, image, address, latlng, op
-            # Proceed to next step
-        else:
-            state = "error"
-            st.markdown("No snake detected in the image.")
-            st.error("No snake detected in the image.")
-            #Raise a warning to user to tell them to upload a valid image
-            # state = "upload_image"
-            return state, image, address, latlng, False
+
+            st.success(f"Snake detected: **{op[0]}** ({op[1]})")
+            return "show_result", image, user_address, latlng, op
+
+    return None

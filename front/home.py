@@ -1,46 +1,106 @@
-import streamlit as st
+"""
+VenomGuard - Home Page
+Landing page with emergency quick actions, global health announcement,
+and educational insights on the world's deadliest snakes.
+"""
+
+from pathlib import Path
 from PIL import Image
+import streamlit as st
+
+SNAKE_DIR = Path(__file__).resolve().parent.parent / "snake"
+
 
 def home_page():
-    # Catchphrase
-    st.markdown("<h2 style='font-size: 40px; text-align: center; color: white;'>Know About the Snake, Stay Safe </h2>", unsafe_allow_html=True)
-    st.write("##")
-    st.write("##")
-    
-    # Greetings
-    st.markdown("<h2 style='font-size: 24px; color: white;'>Greetings </h2>", unsafe_allow_html=True)
+    # Emergency & Website Status Banner
+    st.info(
+        "⚡ **Notice**: The public cloud website is temporarily undergoing infrastructure and model "
+        "upgrades and **will be back online soon!** You can run the entire platform locally or explore "
+        "all features in the live interactive app below."
+    )
 
-    st.markdown("<p style='color: white;'>Welcome to 🛡️VenomGuard, where you can learn about everything you need to know when confronting a snake. All you need to have to get started is the device that you are looking at! Click on the 'Detect' button in the sidebar to identify the snake or the 'Chat' button to get an assistance about the snake. </p>", unsafe_allow_html=True)
+    # Hero Banner
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1f1c2c 0%, #928DAB 100%); padding: 30px; border-radius: 12px; margin-bottom: 24px; text-align: center;">
+        <h1 style='color: #ffffff; font-size: 42px; margin-bottom: 8px;'>🛡️ VenomGuard</h1>
+        <h3 style='color: #f0f0f0; font-size: 22px; font-weight: normal; margin-top: 0;'>
+            Know About the Snake • Prevent Fatalities • Stay Safe
+        </h3>
+        <p style='color: #dcdcdc; max-width: 720px; margin: 12px auto 0 auto; font-size: 15px;'>
+            An open-source AI platform combining computer vision for species identification,
+            WHO-standard emergency first aid guidance, and real-time hospital locator routing.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
-    st.write("##")
-    st.write("##")
-    
+    # Quick Action Buttons
+    col_a1, col_a2, col_a3 = st.columns(3)
+
+    with col_a1:
+        st.markdown("#### 📸 Snake Identification")
+        st.write("Upload or photograph a snake to immediately identify species and venom danger level.")
+        if st.button("🚀 Identify a Snake", use_container_width=True):
+            st.session_state["new_state"] = "detect"
+            rerun_app()
+
+    with col_a2:
+        st.markdown("#### 🤖 Emergency AI Chat")
+        st.write("Chat with the interactive medical companion for emergency triage and first-aid steps.")
+        if st.button("💬 Start VenomChat", use_container_width=True):
+            st.session_state["new_state"] = "chat_c1"
+            rerun_app()
+
+    with col_a3:
+        st.markdown("#### 🤝 Global Mission")
+        st.write("Explore our mission to cut global snakebite mortality in half under the WHO 2030 roadmap.")
+        if st.button("📖 Learn More & Partner", use_container_width=True):
+            st.session_state["new_state"] = "about"
+            rerun_app()
+
+    st.write("---")
+
     # Top 3 Deadliest Snakes in the World
-    st.markdown("<h2 style='font-size: 24px; color: white;'>Top 3 Deadliest Snakes in the World </h2>", unsafe_allow_html=True)
+    st.markdown("### 🐍 Top 3 Deadliest Venomous Snakes in the World")
+    st.caption("Recognizing these highly venomous species can save lives in field encounters.")
+
     col1, col2, col3 = st.columns(3)
-    # left column
+
     with col1:
-        inland_taipan_img = Image.open("./snake/Inland-Taipan.jpeg")
-        resized_it_img = inland_taipan_img.resize((600, 400))
-        st.image(resized_it_img, use_column_width=True)
-        st.markdown("<h3 style='font-size: 18px; text-align: center; color: white;'>&#129351; Inland Taipan </h3>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center; color: white;'> The inland taipan is considered the most venomous snake in the world. The inland taipan's venom has the potency to kill 100 humans in a single bite. It lives in central east Australia. Despite its potency, it is rarely encountered by humans due to its elusive nature and remote habitat. </p>", unsafe_allow_html=True)
-        
-    # middle column
+        it_path = SNAKE_DIR / "Inland-Taipan.jpeg"
+        if it_path.exists():
+            st.image(Image.open(it_path), use_container_width=True)
+        st.markdown("#### 🥇 1. Inland Taipan")
+        st.caption("*Oxyuranus microlepidotus* (Australia)")
+        st.write(
+            "Possesses the most toxic venom of any land snake. A single bite yields enough "
+            "lethal neurotoxin and myotoxin to kill 100 adult humans. Rarely encountered due to remote habitats."
+        )
+
     with col2:
-        coastal_taipan_img = Image.open("./snake/Coastal-Taipan.jpeg")
-        resized_ct_img = coastal_taipan_img.resize((600, 400))
-        st.image(resized_ct_img, use_column_width=True)
-        st.markdown("<h3 style='font-size: 18px; text-align: center; color: white;'>&#129352; Coastal Taipan </h3>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center; color: white;'>You could be bitten multiple times before becoming aware of the coastal taipan, thanks to its incredible speed. The coastal taipan is found in the Australian outback and it ranges from light olive to dark brown in colour but has reddish eyes. The coastal taipan has a long, slender body.</p>", unsafe_allow_html=True)
-        
-    # right column
+        ct_path = SNAKE_DIR / "Coastal-Taipan.jpeg"
+        if ct_path.exists():
+            st.image(Image.open(ct_path), use_container_width=True)
+        st.markdown("#### 🥈 2. Coastal Taipan")
+        st.caption("*Oxyuranus scutellatus* (Australia / New Guinea)")
+        st.write(
+            "Extremely fast and aggressive when cornered, striking repeatedly. Its potent venom "
+            "contains presynaptic neurotoxins causing respiratory paralysis, accompanied by coagulopathy."
+        )
+
     with col3:
-        king_cobra_img = Image.open("./snake/King-Cobra.jpeg")
-        resized_kc_img = king_cobra_img.resize((600, 400))
-        st.image(resized_kc_img, use_column_width=True)
-        st.markdown("<h3 style='font-size: 18px; text-align: center; color: white;'>&#129353; King Cobra </h3>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center; color: white;'>Native to South Asia, the king cobra is the longest venomous snake in the world. A single king cobra bite can kill a human in 15 minutes due to its large amount of venom injection. King Cobra is one of the few creatures in the animal kingdom that eat their own kind. </p>", unsafe_allow_html=True)
-        
-    return
-    
+        kc_path = SNAKE_DIR / "King-Cobra.jpeg"
+        if kc_path.exists():
+            st.image(Image.open(kc_path), use_container_width=True)
+        st.markdown("#### 🥉 3. King Cobra")
+        st.caption("*Ophiophagus hannah* (South & Southeast Asia)")
+        st.write(
+            "The longest venomous snake on Earth (up to 5.5 meters). Injects massive volumes of "
+            "neurotoxic venom in a single bite, capable of killing a full-grown Asian elephant or human within 30 minutes."
+        )
+
+
+def rerun_app():
+    if hasattr(st, "rerun"):
+        st.rerun()
+    elif hasattr(st, "experimental_rerun"):
+        st.experimental_rerun()

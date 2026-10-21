@@ -1,56 +1,85 @@
+"""
+VenomGuard - Emergency First Aid & Hospital Navigation View
+Renders WHO-compliant first-aid instructions, direct emergency phone dialing,
+and hospital navigation links.
+"""
+
+from typing import Any, List, Optional, Tuple
 import streamlit as st
+
 from function.first_aid import tell_first_aid
 from function.llm_chat import first_aid_chat
-
-def first_aid_page(snake_type, location, op):
-    st.markdown("## Snake Information")
+from function.who_guidelines import get_who_protocol
 
 
-    st.markdown(f"- Snake Name: {op[0]}")
-    st.markdown(f"- Species Name: {op[1]}")
-    
-    # Apply conditional coloring
-    danger_level = op[2].lower()
-    if 'non-venomous' in danger_level:
-        dcolor = "green"
-    elif 'venomous' in danger_level and 'danger' in danger_level:
-        dcolor = "red; -webkit-text-stroke: 1px red"
-    elif 'venomous' in danger_level:
-        dcolor = "red"
-    else:  # Unclear dangerousness
-        dcolor = "yellow"
+def first_aid_page(snake_type: str, location: Optional[Tuple[float, float]], op: Any):
+    """
+    Renders emergency first aid protocol, hospital routing, and interactive chat.
+    """
+    snake_name = op[0] if (op and len(op) > 0) else snake_type
+    species_name = op[1] if (op and len(op) > 1) else "Species unconfirmed"
+    danger_level = str(op[2]) if (op and len(op) > 2) else "Unknown"
+    size_info = str(op[3]) if (op and len(op) > 3) else ""
 
-    st.markdown(f"- <span style='color: {dcolor};'>Danger Level: {op[2]}</span>", unsafe_allow_html=True)
-    
-    # st.markdown(f"- Danger Level: <span style='color: red;'>{op[2]}</span>", unsafe_allow_html=True)
+    is_venomous = "venomous" in danger_level.lower() and "non-venomous" not in danger_level.lower()
 
-    st.markdown(f"- {op[3]}")
-    st.session_state["snake_type"] = op[0]
+    st.markdown("## 🚨 Emergency First Aid & Clinical Guidance")
 
-    st.markdown("## What to do?")
-    
-    # Initialize hospitals to an empty list or suitable default
-    hospitals = ["City Government Hospital","Your area has no information on hospitals. Please check with local authorities."]
+    # Emergency quick dial banner
+    col_call, col_status = st.columns([1, 2])
+    with col_call:
+        st.markdown(
+            """
+            <div style="background-color: #c0392b; padding: 14px; border-radius: 8px; text-align: center;">
+                <h4 style="color: white; margin: 0 0 8px 0;">📞 Emergency Services</h4>
+                <a href="tel:112" style="background-color: white; color: #c0392b; padding: 10px 18px; text-decoration: none; font-weight: bold; border-radius: 6px; display: inline-block;">
+                    ⚡ Direct Call 112 (Universal)
+                </a>
+                <p style="color: #ecf0f1; font-size: 11px; margin-top: 8px; margin-bottom: 0;">Also dial 911 (Americas), 108 (India), or 999 (UK/Africa)</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-    if "last" not in st.session_state:
-        st.session_state["last"] = False
-        
-    if not st.session_state["last"]:
-        print("tell user the first aid.")
-        st.markdown("**Thinking...**")
-        # llm searches the first aid
-        first_aid, hospitals = tell_first_aid(snake_type=snake_type, location=location)
-        st.session_state["first_aid"] = first_aid
-        st.session_state["hospitals"] = hospitals
-        st.session_state["last"] = True
+    with col_status:
+        st.markdown(f"**Target Snake**: {snake_name} (*{species_name}*)")
+        if is_venomous:
+            st.error(f"⚠️ **Toxicity**: {danger_level.upper()}")
+        else:
+            st.success(f"🟢 **Toxicity**: {danger_level}")
+        if size_info:
+            st.caption(f"Dimensions: {size_info}")
+
+    st.write("---")
+
+    # Fetch first aid guidance and hospitals once per session/snake
+    cache_key_fa = f"fa_content_{snake_name}"
+    cache_key_hosp = f"fa_hospitals_{snake_name}"
+
+    if cache_key_fa not in st.session_state:
+        with st.spinner("Compiling emergency protocols and querying nearby healthcare centers..."):
+            fa_text, hosp_list = tell_first_aid(snake_name, location=location)
+            st.session_state[cache_key_fa] = fa_text
+            st.session_state[cache_key_hosp] = hosp_list
     else:
-        # Ensure that hospitals is retrieved from session state if already set
-        hospitals = st.session_state.get("hospitals", [])
-    
-    
-    
-    first_aid_chat(snake_type, st.session_state["first_aid"], hospitals)
-    
-    if st.button('Call Emergency Number (112)'):
-        # Create a link that opens the phone dialer with number 112 pre-filled
-        st.markdown('<a href="tel:112" target="_blank">Click to call 112</a>', unsafe_allow_html=True)
+        fa_text = st.session_state[cache_key_fa]
+        hosp_list = st.session_state[cache_key_hosp]
+
+    # Render WHO Protocol Cards
+    protocol = get_who_protocol(snake_name, danger_level)
+
+    col_dos, col_donts = st.columns(2)
+    with col_dos:
+        st.markdown("### 🟢 Essential Immediate Actions (DO)")
+        for item in protocol.immediate_dos:
+            st.markdown(f"- {item}")
+
+    with col_donts:
+        st.markdown("### 🔴 Critical Dangers to Avoid (DO NOT)")
+        for item in protocol.critical_donts:
+            st.markdown(f"- ❌ {item}")
+
+    st.write("---")
+
+    # Nearby hospitals and interactive chat companion
+    first_aid_chat(snake_name, fa_text, hosp_list)
